@@ -12,7 +12,7 @@ public class SupplyOrderNotification {
         this.servicePointId = servicePointId;
         this.type = type;
     }
-    
+   
     public long getOrderNumber() {
         return orderNumber;
     }
