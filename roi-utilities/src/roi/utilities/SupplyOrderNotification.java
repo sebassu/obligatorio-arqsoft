@@ -5,12 +5,10 @@ public class SupplyOrderNotification {
 
     private long orderNumber;
     private long servicePointId;
-    private NotificationType type;
     
-    public SupplyOrderNotification(long orderNumber, long servicePointId, NotificationType type) {
+    public SupplyOrderNotification(long orderNumber, long servicePointId) {
         this.orderNumber = orderNumber;
         this.servicePointId = servicePointId;
-        this.type = type;
     }
    
     public long getOrderNumber() {
@@ -28,17 +26,4 @@ public class SupplyOrderNotification {
     public void setServicePointId(long servicePointId) {
         this.servicePointId = servicePointId;
     }
-
-    public NotificationType getNotificationType() {
-        return type;
-    }
-
-    public void setNotificationType(NotificationType notificationType) {
-        this.type = notificationType;
-    }
-    
-    public enum NotificationType {
-        CREATED, MODIFIED, REMOVED
-    }
-    
 }
