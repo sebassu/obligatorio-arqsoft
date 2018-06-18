@@ -3,21 +3,23 @@ package com.roi.supplying;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import roi.utilities.SupplyOrderNotification;
-import roi.utilities.SupplyOrderNotification.NotificationType;
 
 @Stateless
 @LocalBean
 public class SupplyOrderNotificationBean {
 
-    public void notify(SupplyOrder supplyOrder, NotificationType type) {
+    private SupplyOrderNotification createNotification(SupplyOrder supplyOrder) {
         long orderNumber = supplyOrder.getOrderNumber();
         long servicePointId = supplyOrder.getServicePointId();
         
-        SupplyOrderNotification notification = new 
-            SupplyOrderNotification(orderNumber, servicePointId, type);
-        
+        return new SupplyOrderNotification(orderNumber, servicePointId);
     }
     
+    public void notifyCreation(SupplyOrder supplyOrder) {
+        SupplyOrderNotification notification = createNotification(supplyOrder);
+        
+        //TODO send notification
+    }
 }
 
 
