@@ -26,3 +26,4 @@ hs_err_pid*
 /roi-planner-war/nbproject/private/
 roi-supplying-ejb/nbproject/private/private\.xml
 /roi-supplying-war/nbproject/private/
+/roi-supplying-war/build/
