@@ -3,7 +3,6 @@ package com.roi.supplying;
 import java.util.List;
 import javax.ejb.Local;
 
-
 @Local
 public interface SupplyOrderBeanLocal {
 
@@ -14,5 +13,4 @@ public interface SupplyOrderBeanLocal {
     void remove(long orderNumber);
 
     void modify(long orderNumber, SupplyOrder modifiedOrder);
-    
 }
