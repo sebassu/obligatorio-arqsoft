@@ -8,7 +8,8 @@ import javax.jms.MessageListener;
 import org.apache.log4j.Logger;
 
 @MessageDriven(activationConfig = {
-    @ActivationConfigProperty(propertyName = "destinationLookup", propertyValue = "jms/roiLoggingQueue"),
+    @ActivationConfigProperty(propertyName = "destinationLookup", propertyValue = "jms/roiLoggingQueue")
+    ,
     @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue")})
 public class LoggingMessageBean implements MessageListener {
 
