@@ -7,7 +7,7 @@ import roi.utilities.SupplyOrderNotification;
 @Stateless
 @LocalBean
 public class SupplyOrderNotificationBean {
-
+    //TODO remove maybe
     private SupplyOrderNotification createNotification(SupplyOrder supplyOrder) {
         long orderNumber = supplyOrder.getOrderNumber();
         long servicePointId = supplyOrder.getServicePointId();
