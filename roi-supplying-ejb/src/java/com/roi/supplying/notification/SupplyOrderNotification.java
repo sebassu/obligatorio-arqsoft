@@ -1,4 +1,4 @@
-package com.roi.supplying;
+package com.roi.supplying.notification;
 
 public class SupplyOrderNotification { 
  
