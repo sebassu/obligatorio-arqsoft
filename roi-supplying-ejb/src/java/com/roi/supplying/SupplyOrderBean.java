@@ -14,7 +14,7 @@ public class SupplyOrderBean implements SupplyOrderBeanLocal {
 
     @PersistenceContext
     private EntityManager entityManager;
-     
+
     @Override
     public void create(SupplyOrder supplyOrder) {
         entityManager.persist(supplyOrder);
@@ -30,7 +30,7 @@ public class SupplyOrderBean implements SupplyOrderBeanLocal {
         TypedQuery<SupplyOrder> allQuery = entityManager.createQuery(all);
         return allQuery.getResultList();
     }
-    
+
     @Override
     public void modify(long orderNumber, SupplyOrder modifiedOrder) {
         SupplyOrder supplyOrder = entityManager.find(SupplyOrder.class, orderNumber);
@@ -42,12 +42,11 @@ public class SupplyOrderBean implements SupplyOrderBeanLocal {
         entityManager.merge(supplyOrder);
         entityManager.flush();
     }
-    
+
     @Override
     public void remove(long orderNumber) {
         SupplyOrder supplyOrder = entityManager.find(SupplyOrder.class, orderNumber);
         entityManager.remove(supplyOrder);
         entityManager.flush();
-    }    
-    
+    }
 }
