@@ -1,6 +1,7 @@
 package com.roi.planner;
 
 import com.google.gson.Gson;
+import javax.ejb.EJB;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Consumes;
@@ -11,14 +12,15 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
-import roi.utilities.SupplyOrderNotification;
 
 @Path("supply-order")
 public class SupplyOrderResource {
 
+    @EJB
+    private NotificationManagerBean notificationManagerBean;
+    
     @Context
     private UriInfo context;
-    
     private final Gson gson;
 
     public SupplyOrderResource() {
@@ -27,23 +29,24 @@ public class SupplyOrderResource {
     
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public void postSupplyOrder(String content) {
+    public void createdSupplyOrder(String content) {
         SupplyOrderNotification notification = gson.fromJson(content, SupplyOrderNotification.class);
-        //TODO persist)? (with provided id) & create plan
+        notificationManagerBean.created(notification);
     }
     
     @PUT
     @Path("{id}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void putSupplyOrder(@PathParam("id") Long id, String body) {
-        //TODO modify)? & modify  plan
+    public void modifiedSupplyOrder(@PathParam("id") Long id, String body) {
+        SupplyOrderNotification notification = gson.fromJson(body, SupplyOrderNotification.class);
+        notificationManagerBean.modified(notification);
     }
     
     @DELETE
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String deleteSupplyOrder(@PathParam("id") Long id) {
-        throw new UnsupportedOperationException();
+    public String removedSupplyOrder(@PathParam("id") Long id) {
+        notificationManagerBean.removed(notification);
     }
     
 }
