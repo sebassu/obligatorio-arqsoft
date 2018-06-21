@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.netbeans.rest.application.config;
+package com.roi.supplying;
 
-import com.roi.supplying.SupplyOrderResource;
 import java.util.Set;
 import javax.ws.rs.core.Application;
 
@@ -30,7 +29,7 @@ public class ApplicationConfig extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
-        resources.add(SupplyOrderResource.class);
+        resources.add(com.roi.supplying.SupplyOrderResource.class);
     }
     
 }
