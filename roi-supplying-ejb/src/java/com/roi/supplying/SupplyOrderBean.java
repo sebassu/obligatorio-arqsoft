@@ -1,6 +1,7 @@
 package com.roi.supplying;
 
 import java.util.List;
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -10,6 +11,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 @Stateless
+@LocalBean
 public class SupplyOrderBean implements SupplyOrderBeanLocal {
 
     @PersistenceContext

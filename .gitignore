@@ -27,3 +27,4 @@ hs_err_pid*
 roi-supplying-ejb/nbproject/private/private\.xml
 /roi-supplying-war/nbproject/private/
 /roi-supplying-war/build/
+/roi-supplying-war/dist/
