@@ -2,7 +2,6 @@ package com.roi.supplying;
 
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
-import roi.utilities.SupplyOrderNotification;
 
 @Stateless
 @LocalBean
