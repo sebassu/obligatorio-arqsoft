@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
 
 @Entity
 public class SupplyOrder implements Serializable {
@@ -15,6 +16,7 @@ public class SupplyOrder implements Serializable {
     private long orderNumber;
     
     private long clientNumber;
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date supplyStart;
     private long orderedVolume;
     private long servicePointId;
