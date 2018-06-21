@@ -58,7 +58,7 @@ public class SupplyOrderResource {
                     .entity("Invalid Supply Order provided")
                     .build();
         } else {
-
+            
             supplyOrderBean.modify(id, supplyOrder);
             response = Response.ok()
                     .entity(supplyOrder)
@@ -73,7 +73,7 @@ public class SupplyOrderResource {
     public Response removeSupplyOrder(@PathParam("id") Long id) {
         Response response;
         supplyOrderBean.remove(id);
-        response = Response.status(Response.Status.ACCEPTED).build();
+        response = Response.status(Response.Status.OK).build();
         return response;
     }
 
