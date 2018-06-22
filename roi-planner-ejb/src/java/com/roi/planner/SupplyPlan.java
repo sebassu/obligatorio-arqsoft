@@ -17,6 +17,16 @@ public class SupplyPlan implements Serializable {
     private long orderNumber;
     private long servicePointId;
     private ArrayList<NetworkFrame> networkFrames;
+    
+    private boolean removed = false;
+
+    public boolean isRemoved() {
+        return removed;
+    }
+
+    public void setRemoved(boolean removed) {
+        this.removed = removed;
+    }
 
     public SupplyPlan() {
     }
