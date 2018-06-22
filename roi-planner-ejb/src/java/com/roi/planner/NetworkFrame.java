@@ -20,4 +20,12 @@ public class NetworkFrame {
     public void setSourceId(long sourceId) {
         this.sourceId = sourceId;
     }
+
+    public long getSectionId() {
+        return sectionId;
+    }
+
+    public void setSectionId(long sectionId) {
+        this.sectionId = sectionId;
+    }
 }

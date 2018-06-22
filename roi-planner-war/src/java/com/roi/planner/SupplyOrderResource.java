@@ -21,6 +21,7 @@ public class SupplyOrderResource {
     
     @Context
     private UriInfo context;
+    
     private final Gson gson;
 
     public SupplyOrderResource() {
@@ -46,7 +47,7 @@ public class SupplyOrderResource {
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public void removedSupplyOrder(@PathParam("id") Long id) {
-        notificationManagerBean.removed();
+        notificationManagerBean.removed(id);
     }
     
 }
