@@ -21,6 +21,7 @@ public class SupplyOrderResource {
     
     @Context
     private UriInfo context;
+    
     private final Gson gson;
 
     public SupplyOrderResource() {
