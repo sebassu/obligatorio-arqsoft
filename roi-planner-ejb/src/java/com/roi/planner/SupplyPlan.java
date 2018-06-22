@@ -9,8 +9,17 @@ public class SupplyPlan {
     private long servicePointId;
     private ArrayList<NetworkFrame> networkFrames;
 
-    public SupplyPlan(){
+    private SupplyPlan(){
         networkFrames = new ArrayList<>();
+    }
+    
+    public static SupplyPlan fromOrderNumberServicePointIdNetworkFrames
+        (long orderNumber, long servicePointId, ArrayList<NetworkFrame> networkFrames){
+            SupplyPlan plan = new SupplyPlan();
+            plan.setOrderNumber(orderNumber);
+            plan.setServicePointId(servicePointId);
+            plan.networkFrames = networkFrames;
+            return plan;
     }
     
     public long getOrderNumber() {
