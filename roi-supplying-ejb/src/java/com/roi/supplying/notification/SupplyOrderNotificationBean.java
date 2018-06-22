@@ -1,5 +1,6 @@
 package com.roi.supplying.notification;
 
+import com.roi.http.Requester;
 import com.roi.supplying.SupplyOrder;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
@@ -20,19 +21,19 @@ public class SupplyOrderNotificationBean {
     public void notifyCreation(SupplyOrder supplyOrder) {
         SupplyOrderNotification notification = createNotification(supplyOrder);
         String url = KREMLIN_URL;
-        String s = Requester.sendRequest(url, "POST", notification, SupplyOrderNotification.class);
+        String s = (String)Requester.sendRequest(url, "POST", String.class, false ,notification, SupplyOrderNotification.class);
     }
 
     public void notifyModification(SupplyOrder supplyOrder) {
         SupplyOrderNotification notification = createNotification(supplyOrder);
         String url = KREMLIN_URL + "/" + supplyOrder.getOrderNumber();
-        String s = Requester.sendRequest(url, "PUT", notification, SupplyOrderNotification.class);
+        String s = (String)Requester.sendRequest(url, "PUT", String.class, false, notification, SupplyOrderNotification.class);
     }
 
     public void notifyRemoval(SupplyOrder supplyOrder) {
         SupplyOrderNotification notification = createNotification(supplyOrder);
         String url = KREMLIN_URL + "/" + supplyOrder.getOrderNumber();
-        Requester.sendRequest(url, "DELETE");
+        String s = (String)Requester.sendRequest(url, "DELETE", String.class, false);
     }
     
 }

@@ -1,5 +1,6 @@
 package com.roi.planner;
 
+import com.roi.http.Requester;
 import java.util.ArrayList;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
