@@ -13,11 +13,11 @@ public class SupplyPlan {
         networkFrames = new ArrayList<>();
     }
     
-    public static SupplyPlan fromOrderNumberServicePointIdNetworkFrames
-        (long orderNumber, long servicePointId, ArrayList<NetworkFrame> networkFrames){
+    public static SupplyPlan fromNotificationAndNetworkFrames
+        (SupplyOrderNotification notification, ArrayList<NetworkFrame> networkFrames){
             SupplyPlan plan = new SupplyPlan();
-            plan.setOrderNumber(orderNumber);
-            plan.setServicePointId(servicePointId);
+            plan.setOrderNumber(notification.getOrderNumber());
+            plan.setServicePointId(notification.getServicePointId());
             plan.networkFrames = networkFrames;
             return plan;
     }
