@@ -1,4 +1,4 @@
-package com.roi.planner;
+package com.roi.goliath;
 
 public class NetworkFrame {
 
@@ -12,6 +12,14 @@ public class NetworkFrame {
 
     public void setActuatorId(long actuatorId) {
         this.actuatorId = actuatorId;
+    }
+
+    public long getSectionId() {
+        return sectionId;
+    }
+
+    public void setSectionId(long sectionId) {
+        this.sectionId = sectionId;
     }
 
     public long getSourceId() {
