@@ -22,6 +22,12 @@ public class SupplyPlanBean implements SupplyPlanBeanLocal {
     public SupplyPlan get(long id) {
         return entityManager.find(SupplyPlan.class, id);
     }
+    
+    @Override
+    public SupplyPlan getByOrder(long orderNumber) {
+        // TODO query to ferch related plan
+        return null;
+    }
 
     @Override
     public void modify(SupplyPlan supplyPlan, long id) {
@@ -35,6 +41,5 @@ public class SupplyPlanBean implements SupplyPlanBeanLocal {
     public void remove(long id) {
         entityManager.remove(id);
     }
-    
-    
+
 }
