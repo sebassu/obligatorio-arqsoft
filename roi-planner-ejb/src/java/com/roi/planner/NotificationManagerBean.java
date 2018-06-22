@@ -16,13 +16,11 @@ public class NotificationManagerBean implements NotificationManagerBeanLocal {
                 sendRequest(url, "POST", NetworkFrame.class, true);
         SupplyPlan plan = SupplyPlan
                 .fromNotificationAndNetworkFrames(notification, networkFrames);
-        
         //TODO Send to Goliath
     }
     
     @Override
     public void modified(SupplyOrderNotification notification) {
-        
         // TODO if servicePointId changed hit pipelinecalc
         // Then modify Plan
     }
