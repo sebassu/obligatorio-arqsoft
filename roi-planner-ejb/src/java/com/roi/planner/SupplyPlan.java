@@ -14,6 +14,7 @@ public class SupplyPlan implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+
     private long orderNumber;
     private long servicePointId;
     private ArrayList<NetworkFrame> networkFrames;
@@ -37,6 +38,10 @@ public class SupplyPlan implements Serializable {
         plan.setServicePointId(notification.getServicePointId());
         plan.networkFrames = networkFrames;
         return plan;
+    }
+    
+    public long getId() {
+        return id;
     }
 
     public long getOrderNumber() {
