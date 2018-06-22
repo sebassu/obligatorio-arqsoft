@@ -27,3 +27,6 @@ hs_err_pid*
 roi-supplying-ejb/nbproject/private/private\.xml
 /roi-logging/nbproject/private/
 /roi-utilities/nbproject/private/
+/roi-models/nbproject/private/
+/roi-models/build/
+/roi-models/dist/

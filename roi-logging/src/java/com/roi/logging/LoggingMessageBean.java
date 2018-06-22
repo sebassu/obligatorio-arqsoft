@@ -1,5 +1,6 @@
 package com.roi.logging;
 
+import com.roi.utilities.LoggingData;
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.MessageDriven;
 import javax.jms.JMSException;
@@ -17,17 +18,37 @@ public class LoggingMessageBean implements MessageListener {
 
     @Override
     public void onMessage(Message message) {
-        Logger logger = Logger.getLogger(LoggingMessageBean.class.getName());
-        Throwable dataToLog = getContentsFromMessage(message);
-        logger.error("Error", dataToLog);
+        LoggingData toLog = getContentsFromMessage(message);
+        performDataLogging(toLog);
     }
 
-    private Throwable getContentsFromMessage(Message message) {
+    private void performDataLogging(LoggingData dataToLog) {
+        Logger logger = Logger.getLogger(dataToLog.originClass);
+        switch (dataToLog.type) {
+            case INFORMATION:
+                logger.info(dataToLog.message);
+                break;
+            case INPUT_ERROR:
+                logger.warn(dataToLog.message);
+                break;
+            case FATAL_ERROR:
+                logger.error(dataToLog.message, dataToLog.errorData);
+                break;
+            default:
+                logger.error("Se obtuvo un mensaje para logging de tipo "
+                        + "desconocido.");
+                break;
+        }
+    }
+
+    private LoggingData getContentsFromMessage(Message data) {
         try {
-            return message.getBody(Throwable.class);
+            return data.getBody(LoggingData.class);
         } catch (JMSException exception) {
-            return new IllegalArgumentException("Ocurrió un error desconocido:"
-                    + " no fue posible interpretar el contenido de un mensaje.");
+            String message = "Ocurrió un error desconocido: no fue posible"
+                    + " interpretar el contenido de un mensaje.";
+            String originClass = LoggingMessageBean.class.getName();
+            return LoggingData.forFatalErrorLog(message, originClass, exception);
         }
     }
 }

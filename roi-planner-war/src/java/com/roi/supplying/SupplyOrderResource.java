@@ -1,7 +1,8 @@
 package com.roi.supplying;
 
 import com.google.gson.Gson;
-import com.roi.utilities.LoggerBeanLocal;
+import com.roi.models.LoggerBean;
+import com.roi.models.LoggerBeanLocal;
 import javax.ejb.EJB;
 import javax.jms.JMSException;
 import javax.ws.rs.core.Context;
@@ -35,7 +36,8 @@ public class SupplyOrderResource {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public Response encolar() throws JMSException {
-        logger.logError(new IllegalStateException());
+        logger.logFatalErrorFromMessageClass("Error", SupplyOrderResource.class.getName(),
+                new IllegalStateException());
         return Response.ok().entity("Ok").build();
     }
 
