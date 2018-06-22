@@ -34,3 +34,10 @@ roi-supplying-ejb/nbproject/private/private\.xml
 /roi-supplying-war/build/
 /roi-supplying-war/dist/
 /roi-http-ejb/nbproject/private/
+/roi-http-ejb/build/
+/roi-http-ejb/dist/
+roi-supplying-war/nbproject/genfiles\.properties
+
+roi-supplying-ejb/nbproject/genfiles\.properties
+
+roi-supplying-ejb/nbproject/private/
