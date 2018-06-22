@@ -10,11 +10,10 @@ import javax.persistence.Temporal;
 
 @Entity
 public class SupplyOrder implements Serializable {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long orderNumber;
-    
     private long clientNumber;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date supplyStart;
