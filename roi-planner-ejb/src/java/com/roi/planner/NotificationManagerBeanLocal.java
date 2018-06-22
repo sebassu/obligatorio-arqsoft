@@ -18,5 +18,5 @@ public interface NotificationManagerBeanLocal {
 
     void modified(SupplyOrderNotification notification);
 
-    void removed();
+    void removed(long orderNumber);
 }

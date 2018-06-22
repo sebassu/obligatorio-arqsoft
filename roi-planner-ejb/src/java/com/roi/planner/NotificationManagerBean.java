@@ -30,8 +30,8 @@ public class NotificationManagerBean implements NotificationManagerBeanLocal {
     }
     
     @Override
-    public void removed(SupplyOrderNotification notification) {
-        SupplyPlan plan = supplyPlanBean.getByOrder(notification.getOrderNumber());
+    public void removed(long orderNumber) {
+        SupplyPlan plan = supplyPlanBean.getByOrder(orderNumber);
         plan.setRemoved(true);
         supplyPlanBean.modify(plan, plan.getId());
     }

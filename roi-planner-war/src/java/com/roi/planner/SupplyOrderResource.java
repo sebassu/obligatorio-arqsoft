@@ -46,7 +46,7 @@ public class SupplyOrderResource {
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public void removedSupplyOrder(@PathParam("id") Long id) {
-        notificationManagerBean.removed();
+        notificationManagerBean.removed(id);
     }
     
 }
