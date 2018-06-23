@@ -6,21 +6,27 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.lang.reflect.Type;
+import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 
 @Stateless
-public class Requester {
+public class RequesterBean implements RequesterBeanLocal {
+
+    private static Gson gson;
+
+    @PostConstruct
+    private void init(){
+        gson = new Gson();
+    }
     
-    private static Gson gson = new Gson();
-   
-    public static Object sendRequest(String url, String method, Type responseType, boolean responseIsList) {
+    public Object sendRequest(String url, String method, Type responseType, boolean responseIsList) {
         return Requester.sendRequest(url, method, responseType, responseIsList, null, null);
     }
     
-    public static Object sendRequest(String url, String method, Type responseType, boolean responseIsList, Object content, Type contentType) {
+    public Object sendRequest(String url, String method, Type responseType, boolean responseIsList, Object content, Type contentType) {
         BufferedReader reader = null;
         try {
             URL finalUrl = new URL(url);
