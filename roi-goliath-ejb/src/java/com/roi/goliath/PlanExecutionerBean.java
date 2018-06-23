@@ -1,7 +1,8 @@
 package com.roi.goliath;
 
 import com.google.gson.Gson;
-import com.roi.models.LoggerBeanLocal;
+import com.roi.models.LoggerBean;
+import javax.annotation.PostConstruct;
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.EJB;
 import javax.ejb.MessageDriven;
@@ -10,15 +11,21 @@ import javax.jms.Message;
 import javax.jms.MessageListener;
 
 @MessageDriven(activationConfig = {
-    @ActivationConfigProperty(propertyName = "destinationLookup", propertyValue = "jms/roiGoliathQueue"),
+    @ActivationConfigProperty(propertyName = "destinationLookup", propertyValue = "jms/roiGoliathQueue")
+    ,
     @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue")})
 public class PlanExecutionerBean implements MessageListener {
 
     @EJB
-    private LoggerBeanLocal logger;
+    private LoggerBean logger;
     private Gson gson;
 
     public PlanExecutionerBean() {
+    }
+
+    @PostConstruct
+    public void init() {
+        gson = new Gson();
     }
 
     @Override

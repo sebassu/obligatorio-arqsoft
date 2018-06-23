@@ -46,3 +46,4 @@ roi-supplying-ejb/nbproject/private/
 roi-utilities/build/
 
 roi-goliath-ejb/build/
+/roi-goliath-ejb/dist/
