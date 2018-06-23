@@ -63,5 +63,4 @@ public class SupplyPlan implements Serializable {
     public ArrayList<NetworkFrame> getNetworkFrames() {
         return networkFrames;
     }
-
 }
