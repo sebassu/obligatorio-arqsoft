@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class SupplyPlan implements Serializable {
@@ -17,6 +18,7 @@ public class SupplyPlan implements Serializable {
 
     private long orderNumber;
     private long servicePointId;
+    @OneToMany
     private ArrayList<NetworkFrame> networkFrames;
     
     private boolean removed = false;
@@ -32,7 +34,8 @@ public class SupplyPlan implements Serializable {
     public SupplyPlan() {
     }
 
-    public static SupplyPlan fromNotificationAndNetworkFrames(SupplyOrderNotification notification, ArrayList<NetworkFrame> networkFrames) {
+    public static SupplyPlan fromNotificationAndNetworkFrames(SupplyOrderNotification
+            notification, ArrayList<NetworkFrame> networkFrames) {
         SupplyPlan plan = new SupplyPlan();
         plan.setOrderNumber(notification.getOrderNumber());
         plan.setServicePointId(notification.getServicePointId());
