@@ -1,7 +1,8 @@
 package com.roi.goliath;
 
 import com.google.gson.Gson;
-import com.roi.models.LoggerBeanLocal;
+import com.roi.models.LoggerBean;
+import javax.annotation.PostConstruct;
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.EJB;
 import javax.ejb.MessageDriven;
@@ -15,10 +16,15 @@ import javax.jms.MessageListener;
 public class PlanExecutionBean implements MessageListener {
 
     @EJB
-    private LoggerBeanLocal logger;
+    private LoggerBean logger;
     private Gson gson;
 
     public PlanExecutionBean() {
+    }
+
+    @PostConstruct
+    public void init() {
+        gson = new Gson();
     }
 
     @Override

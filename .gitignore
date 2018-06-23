@@ -42,3 +42,19 @@ roi-supplying-war/nbproject/genfiles\.properties
 roi-supplying-ejb/nbproject/genfiles\.properties
 
 roi-supplying-ejb/nbproject/private/
+
+roi-goliath-ejb/nbproject/build-impl\.xml
+
+roi-goliath-ejb/nbproject/project\.properties
+
+roi-goliath-ejb/nbproject/project\.xml
+
+roi-planner-ejb/nbproject/project\.properties
+
+roi-planner-war/nbproject/build-impl\.xml
+
+roi-planner-war/nbproject/project\.properties
+
+roi-planner-war/nbproject/project\.xml
+
+roi-supplying-war/nbproject/build-impl\.xml~

@@ -15,14 +15,13 @@ import javax.jms.Queue;
 import javax.jms.Session;
 
 @Stateless
-public class LoggerBean implements LoggerBeanLocal {
+public class LoggerBean {
 
     @Resource(lookup = "jms/roiConnectionFactory")
     private ConnectionFactory factory;
     @Resource(lookup = "jms/roiLoggingQueue")
     private Queue loggingQueue;
 
-    @Override
     public void logInformationMessageFromClass(String logMessage,
             String originClass) {
         LoggingData toLog = LoggingData.forInformationLog(logMessage,
@@ -30,14 +29,12 @@ public class LoggerBean implements LoggerBeanLocal {
         attemptToSendMessageToLoggingQueue(toLog);
     }
 
-    @Override
     public void logInputErrorFromClass(String logMessage, String originClass) {
         LoggingData toLog = LoggingData.forInputErrorLog(logMessage,
                 originClass);
         attemptToSendMessageToLoggingQueue(toLog);
     }
 
-    @Override
     public void logFatalErrorFromMessageClass(String logMessage,
             String originClass, Throwable errorToLog) {
         LoggingData toLog = LoggingData.forFatalErrorLog(logMessage,
