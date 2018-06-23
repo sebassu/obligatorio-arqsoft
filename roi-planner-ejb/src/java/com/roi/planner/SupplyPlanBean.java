@@ -4,6 +4,11 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 @Stateless
 @LocalBean
@@ -25,8 +30,13 @@ public class SupplyPlanBean implements SupplyPlanBeanLocal {
     
     @Override
     public SupplyPlan getByOrder(long orderNumber) {
-        // TODO query to ferch related plan
-        return null;
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<SupplyPlan> cq = cb.createQuery(SupplyPlan.class);
+        Root<SupplyPlan> rootEntry = cq.from(SupplyPlan.class);
+        Predicate cond;
+        cond = cb.equal(rootEntry.get("orderNumber"), orderNumber);
+        TypedQuery<SupplyPlan> query = entityManager.createQuery(cq.where(cond));
+        return query.getSingleResult();
     }
 
     @Override
