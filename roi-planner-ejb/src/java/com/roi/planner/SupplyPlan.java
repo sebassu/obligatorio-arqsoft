@@ -11,25 +11,22 @@ import javax.persistence.OneToMany;
 @Entity
 public class SupplyPlan implements Serializable {
 
+    public enum PlanStatus {
+        REMOVED,
+        APPROVED,
+        OPEN
+    }
+    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-
 
     private long orderNumber;
     private long servicePointId;
     @OneToMany
     private ArrayList<NetworkFrame> networkFrames;
-    
-    private boolean removed = false;
 
-    public boolean isRemoved() {
-        return removed;
-    }
-
-    public void setRemoved(boolean removed) {
-        this.removed = removed;
-    }
+    private PlanStatus status = PlanStatus.OPEN;
 
     public SupplyPlan() {
     }
@@ -41,6 +38,14 @@ public class SupplyPlan implements Serializable {
         plan.setServicePointId(notification.getServicePointId());
         plan.networkFrames = networkFrames;
         return plan;
+    }
+    
+    public PlanStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(PlanStatus status) {
+        this.status = status;
     }
     
     public long getId() {
