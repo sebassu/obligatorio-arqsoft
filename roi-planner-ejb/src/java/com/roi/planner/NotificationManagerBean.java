@@ -33,8 +33,11 @@ public class NotificationManagerBean implements NotificationManagerBeanLocal {
     @Override
     public void removed(long orderNumber) {
         SupplyPlan plan = supplyPlanBean.getByOrder(orderNumber);
-        plan.setStatus(SupplyPlan.PlanStatus.REMOVED);
-        supplyPlanBean.modify(plan, plan.getId());
+        boolean planIsNotYetApproved = plan.getStatus() != SupplyPlan.PlanStatus.APPROVED;
+        if (planIsNotYetApproved) {
+            plan.setStatus(SupplyPlan.PlanStatus.REMOVED);
+            supplyPlanBean.modify(plan, plan.getId());
+        }
     }
 
     private SupplyPlan createPlan(SupplyOrderNotification notification) {
