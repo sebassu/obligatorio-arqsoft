@@ -12,32 +12,32 @@ import javax.jms.MessageListener;
 @MessageDriven(activationConfig = {
     @ActivationConfigProperty(propertyName = "destinationLookup", propertyValue = "jms/roiGoliathQueue"),
     @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue")})
-public class PlanApprovalBean implements MessageListener {
+public class PlanExecutionBean implements MessageListener {
 
     @EJB
     private LoggerBeanLocal logger;
     private Gson gson;
 
-    public PlanApprovalBean() {
+    public PlanExecutionBean() {
     }
 
     @Override
     public void onMessage(Message data) {
         try {
             SupplyPlan toApprove = data.getBody(SupplyPlan.class);
-            approvePlan(toApprove);
+            executePlan(toApprove);
         } catch (JMSException exception) {
             String message = "Ocurrió un error desconocido: no fue posible"
                     + " interpretar el contenido de un mensaje.";
-            String originClass = PlanApprovalBean.class.getName();
+            String originClass = PlanExecutionBean.class.getName();
             logger.logFatalErrorFromMessageClass(message, originClass, exception);
         }
     }
 
-    private void approvePlan(SupplyPlan toApprove) {
+    private void executePlan(SupplyPlan toApprove) {
         String planData = gson.toJson(toApprove);
-        String message = "Se aprobó en Goliath el plan de datos: " + planData;
-        String originClass = PlanApprovalBean.class.getName();
+        String message = "Se ejecutó en Goliath el plan de datos: " + planData;
+        String originClass = PlanExecutionBean.class.getName();
         logger.logInformationMessageFromClass(message, originClass);
     }
 }
