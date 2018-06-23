@@ -5,7 +5,6 @@
         <data xmlns="http://www.netbeans.org/ns/j2ee-ejbjarproject/3">
             <name>roi-supplying-ejb</name>
             <minimum-ant-version>1.6.5</minimum-ant-version>
-            <included-library dirs="200">file.reference.gson-2.8.2.jar</included-library>
             <included-library dirs="100">reference.roi-http-ejb.dist</included-library>
             <source-roots>
                 <root id="src.dir" name="Source Packages"/>
