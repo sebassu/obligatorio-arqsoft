@@ -800,20 +800,20 @@ exists or setup the property manually. For example like this:
     <target depends="compile,-library-inclusion-in-archive-weblogic,-library-inclusion-in-archive-by-user" name="library-inclusion-in-archive"/>
     <target if="is.jars.in.ejbjar" name="-library-inclusion-in-archive-by-user">
         <copyfiles files="${reference.roi-utilities.dist}" todir="${build.classes.dir}"/>
-        <copyfiles files="${file.reference.gson-2.6.2.jar}" todir="${build.classes.dir}"/>
+        <copyfiles files="${file.reference.gson-2.8.2.jar}" todir="${build.classes.dir}"/>
     </target>
     <target if="is.server.weblogic" name="-library-inclusion-in-archive-weblogic">
         <basename file="${reference.roi-utilities.dist}" property="manifest.reference.roi-utilities.dist"/>
-        <basename file="${file.reference.gson-2.6.2.jar}" property="manifest.file.reference.gson-2.6.2.jar"/>
+        <basename file="${file.reference.gson-2.8.2.jar}" property="manifest.file.reference.gson-2.8.2.jar"/>
         <manifest file="${build.ear.classes.dir}/META-INF/MANIFEST.MF" mode="update">
             <attribute name="Extension-List" value="jar-1 jar-2 "/>
             <attribute name="jar-1-Extension-Name" value="${manifest.reference.roi-utilities.dist}"/>
-            <attribute name="jar-2-Extension-Name" value="${manifest.file.reference.gson-2.6.2.jar}"/>
+            <attribute name="jar-2-Extension-Name" value="${manifest.file.reference.gson-2.8.2.jar}"/>
         </manifest>
     </target>
     <target depends="compile" name="library-inclusion-in-manifest">
         <copyfiles files="${reference.roi-utilities.dist}" todir="${dist.ear.dir}"/>
-        <copyfiles files="${file.reference.gson-2.6.2.jar}" todir="${dist.ear.dir}/lib"/>
+        <copyfiles files="${file.reference.gson-2.8.2.jar}" todir="${dist.ear.dir}/lib"/>
         <manifest file="${build.ear.classes.dir}/META-INF/MANIFEST.MF" mode="update"/>
     </target>
     <target name="-copy-meta-inf">
