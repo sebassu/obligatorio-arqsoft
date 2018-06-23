@@ -14,7 +14,7 @@ import javax.persistence.criteria.Root;
 @LocalBean
 public class SupplyPlanBean implements SupplyPlanBeanLocal {
 
-    @PersistenceContext
+    @PersistenceContext(unitName = "PlannerPU")
     private EntityManager entityManager;
 
     @Override
