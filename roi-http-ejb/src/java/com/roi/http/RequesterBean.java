@@ -18,26 +18,26 @@ public class RequesterBean implements RequesterBeanLocal {
     private static Gson gson;
 
     @PostConstruct
-    private void init(){
+    private void init() {
         gson = new Gson();
     }
-    
-    public Object sendRequest(String url, String method, Type responseType, boolean responseIsList) {
-        return Requester.sendRequest(url, method, responseType, responseIsList, null, null);
-    }
-    
-    public Object sendRequest(String url, String method, Type responseType, boolean responseIsList, Object content, Type contentType) {
+
+    public Object sendRequest(Request request) {
         BufferedReader reader = null;
         try {
-            URL finalUrl = new URL(url);
+            URL finalUrl = new URL(request.url);
             HttpURLConnection connection = (HttpURLConnection) finalUrl.openConnection();
             connection.setReadTimeout(5000);
             connection.setConnectTimeout(10000);
-            connection.setRequestMethod(method);
+            connection.setRequestMethod(request.method);
             connection.setDoInput(true);
-            if (content != null && contentType != null) {
-                String jsonNotification = gson.toJson(content, contentType);
+            if (request.content != null && request.contentType != null) {
+                String jsonNotification = gson.toJson(request.content, request.contentType);
                 writeOutput(connection, jsonNotification);
+            }
+            if (request.token != null) {
+                String bearer = "Bearer " + request.token;
+                connection.addRequestProperty("Authentication", bearer);
             }
             connection.connect();
 
