@@ -58,3 +58,7 @@ roi-planner-war/nbproject/project\.properties
 roi-planner-war/nbproject/project\.xml
 
 roi-supplying-war/nbproject/build-impl\.xml~
+/roi-kremlin-ejb/nbproject/private/
+/roi-kremlin-war/nbproject/private/
+/TEST/nbproject/private/
+/TEST/build/

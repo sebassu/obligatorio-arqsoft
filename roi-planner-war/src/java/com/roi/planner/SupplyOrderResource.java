@@ -18,36 +18,37 @@ public class SupplyOrderResource {
 
     @EJB
     private NotificationManagerBean notificationManagerBean;
-    
+
     @Context
     private UriInfo context;
-    
+
     private final Gson gson;
 
     public SupplyOrderResource() {
         this.gson = new Gson();
     }
-    
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public void createdSupplyOrder(String content) {
-        SupplyOrderNotification notification = gson.fromJson(content, SupplyOrderNotification.class);
+        SupplyOrderNotification notification = gson.fromJson(content,
+                SupplyOrderNotification.class);
         notificationManagerBean.created(notification);
     }
-    
+
     @PUT
     @Path("{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public void modifiedSupplyOrder(@PathParam("id") Long id, String body) {
-        SupplyOrderNotification notification = gson.fromJson(body, SupplyOrderNotification.class);
+        SupplyOrderNotification notification = gson.fromJson(body,
+                SupplyOrderNotification.class);
         notificationManagerBean.modified(notification);
     }
-    
+
     @DELETE
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public void removedSupplyOrder(@PathParam("id") Long id) {
         notificationManagerBean.removed(id);
     }
-    
 }
