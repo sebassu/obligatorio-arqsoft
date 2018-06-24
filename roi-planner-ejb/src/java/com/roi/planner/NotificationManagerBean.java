@@ -2,7 +2,9 @@ package com.roi.planner;
 
 import com.roi.http.Request;
 import com.roi.http.RequesterBean;
+import com.roi.security.AuthenticationBean;
 import java.util.ArrayList;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -13,9 +15,17 @@ public class NotificationManagerBean implements NotificationManagerBeanLocal {
     private SupplyPlanBean supplyPlanBean;
     @EJB
     private RequesterBean requesterBean;
+    @EJB
+    private AuthenticationBean authenticationBean;
 
     private static final String PIPELINE_URL = "https://pipeline-calculator-api.herokuapp.com/pipeline-route/service";
+    private String token;
 
+    @PostConstruct
+    public void init(){
+        token = authenticationBean.getToken().toString();
+    }
+    
     @Override
     public void created(SupplyOrderNotification notification) {
         SupplyPlan plan = createPlan(notification);
@@ -49,6 +59,7 @@ public class NotificationManagerBean implements NotificationManagerBeanLocal {
         request.method = "POST";
         request.responseType = NetworkFrame.class;
         request.responseIsList = true;
+        request.token = token;
         ArrayList<NetworkFrame> networkFrames = (ArrayList<NetworkFrame>) requesterBean
                 .sendRequest(request);
         return SupplyPlan

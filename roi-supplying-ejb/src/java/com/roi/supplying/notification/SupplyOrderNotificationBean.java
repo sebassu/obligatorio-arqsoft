@@ -42,6 +42,7 @@ public class SupplyOrderNotificationBean {
         request.responseIsList = false;
         request.content = notification;
         request.contentType = SupplyOrderNotification.class;
+        request.token = token;
         String s = (String) requesterBean.sendRequest(request);
     }
 
@@ -54,6 +55,7 @@ public class SupplyOrderNotificationBean {
         request.responseIsList = false;
         request.content = notification;
         request.contentType = SupplyOrderNotification.class;
+        request.token = token;
         String s = (String) requesterBean.sendRequest(request);
     }
 
@@ -64,6 +66,7 @@ public class SupplyOrderNotificationBean {
         request.url = KREMLIN_URL + "/" + supplyOrder.getOrderNumber();
         request.responseType = String.class;
         request.responseIsList = false;
+        request.token = token;
         String s = (String) requesterBean.sendRequest(request);
     }
 

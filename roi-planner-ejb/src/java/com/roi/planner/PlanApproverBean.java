@@ -2,6 +2,8 @@ package com.roi.planner;
 
 import com.roi.http.Request;
 import com.roi.http.RequesterBean;
+import com.roi.security.AuthenticationBean;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
@@ -16,7 +18,15 @@ public class PlanApproverBean {
     SupplyPlanBean supplyPlanBean;
     @EJB
     RequesterBean requesterBean;
+    @EJB
+    AuthenticationBean authenticationBean;
+    
+    private String token;
 
+    @PostConstruct
+    public void init(){
+        token = authenticationBean.getToken().toString();
+    }
     public void approve(long planId) {
         SupplyPlan plan = supplyPlanBean.get(planId);
         plan.setStatus(SupplyPlan.PlanStatus.APPROVED);
@@ -29,6 +39,7 @@ public class PlanApproverBean {
         request.responseIsList = false;
         request.content = plan;
         request.contentType = SupplyPlan.class;
+        request.token = token;
         requesterBean.sendRequest(request);
     }
 }

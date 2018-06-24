@@ -6,6 +6,7 @@
             <name>roi-planner-ejb</name>
             <minimum-ant-version>1.6.5</minimum-ant-version>
             <included-library dirs="100">reference.roi-http-ejb.dist</included-library>
+            <included-library dirs="100">reference.roi-utilities.dist</included-library>
             <source-roots>
                 <root id="src.dir" name="Source Packages"/>
             </source-roots>
@@ -16,6 +17,14 @@
         <references xmlns="http://www.netbeans.org/ns/ant-project-references/1">
             <reference>
                 <foreign-project>roi-http-ejb</foreign-project>
+                <artifact-type>jar</artifact-type>
+                <script>build.xml</script>
+                <target>dist</target>
+                <clean-target>clean</clean-target>
+                <id>dist</id>
+            </reference>
+            <reference>
+                <foreign-project>roi-utilities</foreign-project>
                 <artifact-type>jar</artifact-type>
                 <script>build.xml</script>
                 <target>dist</target>
