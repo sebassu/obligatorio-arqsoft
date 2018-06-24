@@ -1,6 +1,7 @@
 package com.roi.planner;
 
-import com.roi.http.Requester;
+import com.roi.http.Request;
+import com.roi.http.RequesterBean;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
@@ -13,12 +14,21 @@ public class PlanApproverBean {
 
     @EJB
     SupplyPlanBean supplyPlanBean;
+    @EJB
+    RequesterBean requesterBean;
 
     public void approve(long planId) {
         SupplyPlan plan = supplyPlanBean.get(planId);
         plan.setStatus(SupplyPlan.PlanStatus.APPROVED);
         supplyPlanBean.modify(plan, planId);
         
-        Requester.sendRequest(KREMLIN_URL, "POST", String.class, false, plan, SupplyPlan.class);
+        Request request = new Request();
+        request.url = KREMLIN_URL;
+        request.method = "POST";
+        request.responseType = String.class;
+        request.responseIsList = false;
+        request.content = plan;
+        request.contentType = SupplyPlan.class;
+        requesterBean.sendRequest(request);
     }
 }
