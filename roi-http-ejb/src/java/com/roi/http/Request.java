@@ -11,4 +11,6 @@ public class Request implements Serializable {
     public Object content;
     public Type contentType;
     public String token;
+    
+    //TODO Create two constructors, make all final
 }
