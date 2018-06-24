@@ -2,8 +2,8 @@ package com.roi.supplying.notification;
 
 import com.roi.http.Request;
 import com.roi.http.RequesterBean;
+import com.roi.security.AuthenticationBean;
 import com.roi.supplying.SupplyOrder;
-import com.roi.supplying.security.AuthenticationBean;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
