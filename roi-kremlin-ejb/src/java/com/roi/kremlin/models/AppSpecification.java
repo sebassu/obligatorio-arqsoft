@@ -3,7 +3,7 @@ package com.roi.kremlin.models;
 import java.util.List;
 import java.util.UUID;
 
-public class ServiceSpecification {
+public class AppSpecification {
 
     private String name;
     private UUID token;
