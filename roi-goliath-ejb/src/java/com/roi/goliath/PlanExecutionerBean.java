@@ -28,6 +28,11 @@ public class PlanExecutionerBean implements MessageListener {
         gson = new Gson();
     }
 
+    @PostConstruct
+    public void init() {
+        gson = new Gson();
+    }
+
     @Override
     public void onMessage(Message data) {
         try {

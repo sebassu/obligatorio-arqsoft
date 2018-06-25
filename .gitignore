@@ -45,5 +45,24 @@ roi-supplying-ejb/nbproject/private/
 /roi-goliath-ejb/build/
 roi-utilities/build/
 
-roi-goliath-ejb/build/
-/roi-goliath-ejb/dist/
+roi-goliath-ejb/nbproject/build-impl\.xml
+
+roi-goliath-ejb/nbproject/project\.properties
+
+roi-goliath-ejb/nbproject/project\.xml
+
+roi-planner-ejb/nbproject/project\.properties
+
+roi-planner-war/nbproject/build-impl\.xml
+
+roi-planner-war/nbproject/project\.properties
+
+roi-planner-war/nbproject/project\.xml
+
+roi-supplying-war/nbproject/build-impl\.xml~
+/roi-kremlin-ejb/nbproject/private/
+/roi-kremlin-war/nbproject/private/
+/TEST/nbproject/private/
+/TEST/build/
+/roi-kremlin-ejb/dist/
+roi-kremlin-ejb/build/
