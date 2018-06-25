@@ -27,12 +27,7 @@ public class PlanExecutionerBean implements MessageListener {
     public void init() {
         gson = new Gson();
     }
-
-    @PostConstruct
-    public void init() {
-        gson = new Gson();
-    }
-
+    
     @Override
     public void onMessage(Message data) {
         try {
