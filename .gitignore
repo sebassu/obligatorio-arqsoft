@@ -62,3 +62,5 @@ roi-supplying-war/nbproject/build-impl\.xml~
 /roi-kremlin-war/nbproject/private/
 /TEST/nbproject/private/
 /TEST/build/
+/roi-kremlin-ejb/dist/
+roi-kremlin-ejb/build/
