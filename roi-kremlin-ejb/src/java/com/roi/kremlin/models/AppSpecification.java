@@ -33,4 +33,17 @@ public class AppSpecification {
     public void setToken(UUID token) {
         this.token = token;
     }
+    
+    public FunctionSpecification getFunSpecificationByName(String functionName) {
+        boolean found = false;
+        FunctionSpecification funSpec = null;
+        for (int i = 0; i < this.functionSpecifications.size() && !found; i++) {
+            FunctionSpecification spec = this.functionSpecifications.get(i);
+            if (spec.getName().equals(functionName)) {
+                funSpec = spec;
+                found = true;
+            }
+        }
+        return funSpec;
+    }
 }

@@ -4,9 +4,9 @@
 "functionSpecifications":
 	{
 	"name":"createdSupplyOrder",
-	"location":"supply-order",
+	"location":"/supply-order/{id}",
 	"type":"WEB_REST_API",
-	"parameters": [{"orderNumber":"long"}, {"servicePointId":"long"}],
+	"parameters": [{"id":"long"}{"orderNumber":"long"}, {"servicePointId":"long"}],
 	"accessibleBy": ["supplyier"]
 	},
 	{
