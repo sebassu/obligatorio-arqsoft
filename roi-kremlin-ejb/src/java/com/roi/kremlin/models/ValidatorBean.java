@@ -29,9 +29,16 @@ public class ValidatorBean {
             JSONObject jsonData;
             jsonData = getJsonfromString(content);
             return parametersMatch(funSpec.getParameters(), jsonData);
-        } catch (NoSuchMethodException | ParseException ex) {
+            
+        } catch (NoSuchMethodException ex) {
+            loggerBean.logInputErrorFromClass(ex.getMessage(),
+                    ValidatorBean.class.toString());
             return false;
-        }
+        } catch (ParseException ex) {
+            loggerBean.logInputErrorFromClass("Error when parsing provided parameters.",
+                    ValidatorBean.class.toString());
+            return false;
+        } 
     }
 
     private boolean parametersMatch(Map<String, String> specifiedParams, JSONObject data) {
