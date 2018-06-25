@@ -26,7 +26,9 @@ public class SupplyOrderResource {
     public SupplyOrderResource() {
         this.gson = new Gson();
     }
-
+    //TODO GET
+    
+    
     //TODO catch exceptions thrown by bean
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
