@@ -1,0 +1,26 @@
+{
+"name":"planner",
+"token":"",
+"functionSpecifications":
+	{
+	"name":"createdSupplyOrder",
+	"location":"supply-order",
+	"type":"WEB_REST_API",
+	"parameters": [{"orderNumber":"long"}, {"servicePointId":"long"}],
+	"accessibleBy": ["supplyier"]
+	},
+	{
+	"name":"modifiedSupplyOrder",
+	"location":"supply-order",
+	"type":"WEB_REST_API",
+	"parameters": [{"orderNumber":"long"}, {"servicePointId":"long"}],
+	"accessibleBy": ["supplyier"]
+	},
+	{
+	"name":"removedSupplyOrder",
+	"location":"supply-order",
+	"type":"WEB_REST_API",
+	"parameters": [{"orderNumber":"long"}],
+	"accessibleBy": ["supplyier"]
+	}
+}
