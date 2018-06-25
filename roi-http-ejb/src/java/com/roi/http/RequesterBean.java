@@ -36,8 +36,7 @@ public class RequesterBean implements RequesterBeanLocal {
                 writeOutput(connection, jsonNotification);
             }
             if (request.token != null) {
-                String bearer = "Bearer " + request.token;
-                connection.addRequestProperty("Authentication", bearer);
+                connection.addRequestProperty("Authentication", request.token);
             }
             connection.connect();
 
