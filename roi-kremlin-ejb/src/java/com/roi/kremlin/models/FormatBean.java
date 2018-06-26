@@ -36,4 +36,24 @@ public class FormatBean {
         }
         return true;
     }
+
+    public boolean specifiedFormatisValid(ParameterSpecification paramSpec) {
+        boolean formatWasSpecified = paramSpec.getFormat() != null;
+        if(!formatWasSpecified){
+            return true;
+        }
+        boolean isDate = "Date".equalsIgnoreCase(paramSpec.getType());
+        if (isDate) {
+            try {
+                String format = paramSpec.getFormat();
+                DateFormat dateFormat = new SimpleDateFormat(paramSpec.getFormat());
+                return true;
+            } catch (IllegalArgumentException ex) {
+                loggerBean.logInputErrorFromClass("Inválid format specified: " + ex,
+                        ValidatorBean.class.toString());
+                return false;
+            }
+        }
+        return false;
+    }
 }
