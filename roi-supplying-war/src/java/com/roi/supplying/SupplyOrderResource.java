@@ -1,15 +1,18 @@
 package com.roi.supplying;
 
 import com.google.gson.Gson;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -26,10 +29,16 @@ public class SupplyOrderResource {
     public SupplyOrderResource() {
         this.gson = new Gson();
     }
-    //TODO GET
     
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getSupplyOrders() {
+        List<SupplyOrder> supplyOrders = supplyOrderBean.getAll();
+        return Response.ok()
+                    .entity(supplyOrders)
+                    .build();
+    }
     
-    //TODO catch exceptions thrown by bean
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createSupplyOrder(String content) {

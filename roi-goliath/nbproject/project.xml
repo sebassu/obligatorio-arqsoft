@@ -3,19 +3,19 @@
     <type>org.netbeans.modules.j2ee.earproject</type>
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/j2ee-earproject/2">
-            <name>roi-logging</name>
+            <name>roi-goliath</name>
             <minimum-ant-version>1.6.5</minimum-ant-version>
             <web-module-libraries/>
             <web-module-additional-libraries>
                 <library>
-                    <file>${reference.roi-logging-ejb.dist-ear}</file>
+                    <file>${reference.roi-goliath-ejb.dist-ear}</file>
                     <path-in-war>/</path-in-war>
                 </library>
             </web-module-additional-libraries>
         </data>
         <references xmlns="http://www.netbeans.org/ns/ant-project-references/1">
             <reference>
-                <foreign-project>roi-logging-ejb</foreign-project>
+                <foreign-project>roi-goliath-ejb</foreign-project>
                 <artifact-type>j2ee_ear_archive</artifact-type>
                 <script>build.xml</script>
                 <target>dist-ear</target>
