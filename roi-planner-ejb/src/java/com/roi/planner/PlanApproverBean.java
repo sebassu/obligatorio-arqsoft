@@ -3,6 +3,7 @@ package com.roi.planner;
 import com.roi.http.Request;
 import com.roi.http.RequesterBean;
 import com.roi.security.AuthenticationBean;
+import java.lang.reflect.Type;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -24,22 +25,23 @@ public class PlanApproverBean {
     private String token;
 
     @PostConstruct
-    public void init(){
+    public void init() {
         token = authenticationBean.getToken().toString();
     }
+    
     public void approve(long planId) {
         SupplyPlan plan = supplyPlanBean.get(planId);
         plan.setStatus(SupplyPlan.PlanStatus.APPROVED);
         supplyPlanBean.modify(plan, planId);
         
-        Request request = new Request();
-        request.url = KREMLIN_URL;
-        request.method = "POST";
-        request.responseType = String.class;
-        request.responseIsList = false;
-        request.content = plan;
-        request.contentType = SupplyPlan.class;
-        request.token = token;
+        String url = KREMLIN_URL;
+        String method = "POST";
+        Type responseType = String.class;
+        Boolean responseIsList = false;
+        Type contentType = SupplyPlan.class;
+        
+        Request request = Request.buildRequestWithContent(url, method, responseType,
+                responseIsList, token, plan, contentType);
         requesterBean.sendRequest(request);
     }
 }

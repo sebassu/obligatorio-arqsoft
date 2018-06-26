@@ -11,8 +11,7 @@ import javax.jms.Message;
 import javax.jms.MessageListener;
 
 @MessageDriven(activationConfig = {
-    @ActivationConfigProperty(propertyName = "destinationLookup", propertyValue = "jms/roiGoliathQueue")
-    ,
+    @ActivationConfigProperty(propertyName = "destinationLookup", propertyValue = "jms/roiGoliathQueue"),
     @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue")})
 public class PlanExecutionerBean implements MessageListener {
 
@@ -27,7 +26,7 @@ public class PlanExecutionerBean implements MessageListener {
     public void init() {
         gson = new Gson();
     }
-    
+
     @Override
     public void onMessage(Message data) {
         try {

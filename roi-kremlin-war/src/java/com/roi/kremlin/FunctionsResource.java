@@ -33,7 +33,8 @@ public class FunctionsResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("{appName}/{function}")
-    public Response call(@PathParam("appName")String appName, @PathParam("function")String function, String content, @Context HttpHeaders headers) {
+    public Response call(@PathParam("appName")String appName, 
+            @PathParam("function")String function, String content, @Context HttpHeaders headers) {
 
         List<String> authHeaders = headers.getRequestHeader(HttpHeaders.AUTHORIZATION);
         if (authHeaders.isEmpty()) {

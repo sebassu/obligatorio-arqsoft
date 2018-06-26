@@ -30,7 +30,7 @@ public class ServicesBean {
     }
 
     public List<AppSpecification> getAppsSpecs() {
-        if(appsSpecifications == null){
+        if (appsSpecifications == null) {
             loadRegisteredApplications();
         }
         return appsSpecifications;

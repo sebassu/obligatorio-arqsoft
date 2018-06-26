@@ -16,7 +16,7 @@ public class ValidatorBean {
 
     @EJB
     FormatBean formatBean;
-    
+
     @EJB
     ServicesBean servicesBean;
 
@@ -60,12 +60,12 @@ public class ValidatorBean {
                 boolean valueHasCorrectType;
 
                 valueHasCorrectType = Class.forName(paramSpec.getType()).isInstance(value);
-                
+
                 boolean valueHasCorrectFormat = true;
-                if(paramSpec.getFormat() != null){
-                    valueHasCorrectFormat = formatBean.validateFormat(value, paramSpec);    
+                if (paramSpec.getFormat() != null) {
+                    valueHasCorrectFormat = formatBean.validateFormat(value, paramSpec);
                 }
-                
+
                 hasParameter = valueHasCorrectType && valueHasCorrectFormat;
             }
         } catch (ClassNotFoundException ex) {

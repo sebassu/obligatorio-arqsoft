@@ -3,14 +3,18 @@ package com.roi.planner;
 import com.roi.http.Request;
 import com.roi.http.RequesterBean;
 import com.roi.security.AuthenticationBean;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
 @Stateless
-public class NotificationManagerBean implements NotificationManagerBeanLocal {
-
+@LocalBean
+public class NotificationManagerBean {
+    private static final String PIPELINE_URL = 
+            "https://pipeline-calculator-api.herokuapp.com/pipeline-route/service";
     @EJB
     private SupplyPlanBean supplyPlanBean;
     @EJB
@@ -18,21 +22,19 @@ public class NotificationManagerBean implements NotificationManagerBeanLocal {
     @EJB
     private AuthenticationBean authenticationBean;
 
-    private static final String PIPELINE_URL = "https://pipeline-calculator-api.herokuapp.com/pipeline-route/service";
+    
     private String token;
 
     @PostConstruct
-    public void init(){
+    public void init() {
         token = authenticationBean.getToken().toString();
     }
     
-    @Override
     public void created(SupplyOrderNotification notification) {
         SupplyPlan plan = createPlan(notification);
         supplyPlanBean.create(plan);
     }
 
-    @Override
     public void modified(SupplyOrderNotification notification) {
         SupplyPlan plan = supplyPlanBean.getByOrder(notification.getOrderNumber());
         boolean planIsNotYetApproved = plan.getStatus() != SupplyPlan.PlanStatus.APPROVED;
@@ -43,7 +45,6 @@ public class NotificationManagerBean implements NotificationManagerBeanLocal {
         }
     }
 
-    @Override
     public void removed(long orderNumber) {
         SupplyPlan plan = supplyPlanBean.getByOrder(orderNumber);
         boolean planIsNotYetApproved = plan.getStatus() != SupplyPlan.PlanStatus.APPROVED;
@@ -54,12 +55,12 @@ public class NotificationManagerBean implements NotificationManagerBeanLocal {
     }
 
     private SupplyPlan createPlan(SupplyOrderNotification notification) {
-        Request request = new Request();
-        request.url = PIPELINE_URL + "/" + notification.getServicePointId();
-        request.method = "POST";
-        request.responseType = NetworkFrame.class;
-        request.responseIsList = true;
-        request.token = token;
+        String url = PIPELINE_URL + "/" + notification.getServicePointId();
+        String method = "POST";
+        Type responseType = NetworkFrame.class;
+        boolean responseIsList = true;
+        Request request = Request.buildRequestWithoutContent(url, method, responseType, responseIsList, token);
+        
         ArrayList<NetworkFrame> networkFrames = (ArrayList<NetworkFrame>) requesterBean
                 .sendRequest(request);
         return SupplyPlan

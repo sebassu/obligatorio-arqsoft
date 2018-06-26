@@ -39,7 +39,7 @@ public class FormatBean {
 
     public boolean specifiedFormatisValid(ParameterSpecification paramSpec) {
         boolean formatWasSpecified = paramSpec.getFormat() != null;
-        if(!formatWasSpecified){
+        if (!formatWasSpecified) {
             return true;
         }
         boolean isDate = "Date".equalsIgnoreCase(paramSpec.getType());

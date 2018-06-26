@@ -1,21 +1,25 @@
 package com.roi.http;
 
 import com.google.gson.Gson;
+import com.roi.models.LoggerBean;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
+import javax.ejb.EJB;
 
 @Stateless
 public class RequesterBean implements RequesterBeanLocal {
 
     private static Gson gson;
+
+    @EJB
+    LoggerBean loggerBean;
 
     @PostConstruct
     private void init() {
@@ -44,7 +48,8 @@ public class RequesterBean implements RequesterBeanLocal {
             String valor = reader.readLine();
             return valor;
         } catch (IOException ex) {
-
+            loggerBean.logFatalErrorFromMessageClass("Failed to read connection stream.",
+                    RequesterBean.class.toString(), ex);
         } finally {
             if (reader != null) {
                 try {

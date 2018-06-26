@@ -14,7 +14,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 
 @Path("supply-order")
-public class SupplyOrderResource {
+public class SupplyOrderNotificationResource {
 
     @EJB
     private NotificationManagerBean notificationManagerBean;
@@ -24,7 +24,7 @@ public class SupplyOrderResource {
 
     private final Gson gson;
 
-    public SupplyOrderResource() {
+    public SupplyOrderNotificationResource() {
         this.gson = new Gson();
     }
 
