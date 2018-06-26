@@ -6,7 +6,12 @@
 	"name":"createdSupplyOrder",
 	"location":"/supply-order/{id}",
 	"type":"WEB_REST_API",
-	"parameters": [{"id":"long"}{"orderNumber":"long"}, {"servicePointId":"long"}],
+	"parameters": 
+		[
+			{"name":"id", "type":"long", "format": "yyyy/mm/dd"},
+			{"name":"orderNumber", "type":"long"},
+			{"name":"servicePointId", "type":"long"}
+		],
 	"accessibleBy": ["supplyier"]
 	},
 	{

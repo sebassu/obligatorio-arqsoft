@@ -1,11 +1,8 @@
 package com.roi.kremlin.models;
 
 import com.roi.models.LoggerBean;
-import java.lang.reflect.Type;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
@@ -17,6 +14,9 @@ import org.json.simple.parser.ParseException;
 @LocalBean
 public class ValidatorBean {
 
+    @EJB
+    FormatBean formatBean;
+    
     @EJB
     ServicesBean servicesBean;
 
@@ -60,9 +60,13 @@ public class ValidatorBean {
                 boolean valueHasCorrectType;
 
                 valueHasCorrectType = Class.forName(paramSpec.getType()).isInstance(value);
-                valueHasCorrectFormat = validateFormat(value, paramSpec);
-
-                hasParameter = valueHasCorrectType;
+                
+                boolean valueHasCorrectFormat = true;
+                if(paramSpec.getFormat() != null){
+                    valueHasCorrectFormat = formatBean.validateFormat(value, paramSpec);    
+                }
+                
+                hasParameter = valueHasCorrectType && valueHasCorrectFormat;
             }
         } catch (ClassNotFoundException ex) {
             loggerBean.logFatalErrorFromMessageClass("Error when validating value type",
@@ -74,17 +78,5 @@ public class ValidatorBean {
     private JSONObject getJsonfromString(String strJson) throws ParseException {
         JSONParser parser = new JSONParser();
         return (JSONObject) parser.parse(strJson);
-    }
-
-    private boolean validateFormat(Object value, ParameterSpecification paramSpec) {
-        return true;
-//        (Class.forName(paramSpec.getType())).
-//        switch (paramType) {
-//            case Date.class:
-//                
-//                break;
-//            default:
-//                throw new AssertionError();
-//        }
     }
 }
