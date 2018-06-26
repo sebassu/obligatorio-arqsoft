@@ -1,8 +1,6 @@
 package com.roi.kremlin;
 
 import com.roi.kremlin.models.AuthorizationBean;
-import com.roi.kremlin.models.ServicesBean;
-import com.roi.kremlin.models.ServicesBean;
 import com.roi.kremlin.models.ValidatorBean;
 import java.util.List;
 import javax.ws.rs.Consumes;
@@ -52,6 +50,8 @@ public class FunctionsResource {
         if (!isValidCall) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
+        
+        
 
         return Response.ok().build();
     }
