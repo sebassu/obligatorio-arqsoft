@@ -67,8 +67,8 @@ public class ServicesBean {
             AppSpecification[] appSpecs = gson.fromJson(reader, AppSpecification[].class);
             appsSpecifications = Arrays.asList(appSpecs);
             if (!checkFormatsAreValid()) {
-                throw new IllegalStateException("Specification file with invalid format.");
                 appsSpecifications = null;
+                throw new IllegalStateException("Specification file with invalid format.");
             }
         } catch (FileNotFoundException | JsonIOException | JsonSyntaxException io) {
             throw new IllegalStateException("Specification file is invalid: " + io);
