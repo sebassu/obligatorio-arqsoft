@@ -1,10 +1,11 @@
 package com.roi.kremlin.models;
 
 import com.roi.models.LoggerBean;
+import java.lang.reflect.Type;
+import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
@@ -29,7 +30,7 @@ public class ValidatorBean {
             JSONObject jsonData;
             jsonData = getJsonfromString(content);
             return parametersMatch(funSpec.getParameters(), jsonData);
-            
+
         } catch (NoSuchMethodException ex) {
             loggerBean.logInputErrorFromClass(ex.getMessage(),
                     ValidatorBean.class.toString());
@@ -38,30 +39,30 @@ public class ValidatorBean {
             loggerBean.logInputErrorFromClass("Error when parsing provided parameters.",
                     ValidatorBean.class.toString());
             return false;
-        } 
+        }
     }
 
-    private boolean parametersMatch(Map<String, String> specifiedParams, JSONObject data) {
+    private boolean parametersMatch(List<ParameterSpecification> specifiedParams, JSONObject data) {
         boolean hasParameters = true;
-        Iterator<String> iterator = specifiedParams.keySet().iterator();
+        Iterator<ParameterSpecification> iterator = specifiedParams.iterator();
         while (iterator.hasNext() && hasParameters) {
-            String paramName = iterator.next();
-            String paramType = specifiedParams.get(paramName);
-            hasParameters = hasParameter(data, paramName, paramType);
+            ParameterSpecification paramSpec = iterator.next();
+            hasParameters = meetsSpecification(data, paramSpec);
         }
         return hasParameters;
     }
 
-    private boolean hasParameter(JSONObject data, String paramName, String paramType) {
+    private boolean meetsSpecification(JSONObject data, ParameterSpecification paramSpec) {
         boolean hasParameter = false;
         try {
-            if (data.containsKey(paramName)) {
-                Object value = data.get(paramName);
-                boolean valueIsCorrectType;
+            if (data.containsKey(paramSpec.getName())) {
+                Object value = data.get(paramSpec.getName());
+                boolean valueHasCorrectType;
 
-                valueIsCorrectType = Class.forName(paramType).isInstance(value);
+                valueHasCorrectType = Class.forName(paramSpec.getType()).isInstance(value);
+                valueHasCorrectFormat = validateFormat(value, paramSpec);
 
-                hasParameter = valueIsCorrectType;
+                hasParameter = valueHasCorrectType;
             }
         } catch (ClassNotFoundException ex) {
             loggerBean.logFatalErrorFromMessageClass("Error when validating value type",
@@ -73,5 +74,17 @@ public class ValidatorBean {
     private JSONObject getJsonfromString(String strJson) throws ParseException {
         JSONParser parser = new JSONParser();
         return (JSONObject) parser.parse(strJson);
+    }
+
+    private boolean validateFormat(Object value, ParameterSpecification paramSpec) {
+        return true;
+//        (Class.forName(paramSpec.getType())).
+//        switch (paramType) {
+//            case Date.class:
+//                
+//                break;
+//            default:
+//                throw new AssertionError();
+//        }
     }
 }

@@ -1,16 +1,15 @@
 package com.roi.kremlin.models;
 
 import java.util.List;
-import java.util.Map;
 
 public class FunctionSpecification {
 
     private String name;
     private String location;
     private CommunicationType type;
-    private Map<String, String> parameters;
+    private List<ParameterSpecification> parameters;
     private List<String> accessibleBy;
-
+    
     public String getName() {
         return name;
     }
@@ -35,7 +34,7 @@ public class FunctionSpecification {
         this.type = type;
     }
 
-    public Map<String, String> getParameters() {
+    public List<ParameterSpecification> getParameters() {
         return parameters;
     }
 
