@@ -13,7 +13,7 @@ import javax.ejb.LocalBean;
 @LocalBean
 public class PlanApproverBean {
 
-    private static final String KREMLIN_URL = "https://";
+    private String KREMLIN_URL;
 
     @EJB
     SupplyPlanBean supplyPlanBean;
@@ -21,27 +21,34 @@ public class PlanApproverBean {
     RequesterBean requesterBean;
     @EJB
     AuthenticationBean authenticationBean;
-    
+
     private String token;
 
     @PostConstruct
     public void init() {
         token = authenticationBean.getToken().toString();
     }
-    
+
     public void approve(long planId) {
         SupplyPlan plan = supplyPlanBean.get(planId);
         plan.setStatus(SupplyPlan.PlanStatus.APPROVED);
         supplyPlanBean.modify(plan, planId);
-        
-        String url = KREMLIN_URL;
+
+        String url = getKremlinUrl();
         String method = "POST";
         Type responseType = String.class;
         Boolean responseIsList = false;
         Type contentType = SupplyPlan.class;
-        
+
         Request request = Request.buildRequestWithContent(url, method, responseType,
                 responseIsList, token, plan, contentType);
         requesterBean.sendRequest(request);
+    }
+
+    private String getKremlinUrl() {
+        if (KREMLIN_URL == null) {
+            KREMLIN_URL = authenticationBean.getKremlinUrl();
+        }
+        return KREMLIN_URL;
     }
 }

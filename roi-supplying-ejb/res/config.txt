@@ -1,0 +1,2 @@
+token=dc4c49a9-f0e7-4633-8cb4-b60e544a0559
+kremlinUrl=http://kremlin.com/web-services/functions/

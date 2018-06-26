@@ -24,11 +24,19 @@ public class AuthenticationBean {
         properties = new Properties();
     }
 
+    public String getKremlinUrl() {
+        return getConfigValue("kremlinUrl");
+    }
+    
     public UUID getToken() {
+        return UUID.fromString(getConfigValue("token"));
+    }
+    
+    private String getConfigValue(String valueName) {
         try (FileInputStream in = new FileInputStream("/res/config.txt")) {
             properties.load(in);
-            String strToken = properties.getProperty("token");
-            return UUID.fromString(strToken);
+            String strToken = properties.getProperty(valueName);
+            return strToken;
         } catch (IOException | IllegalArgumentException e) {
             loggerBean.logInputErrorFromClass("Couldnt parse configured token.", AuthenticationBean.class.toString());
             throw new IllegalStateException(e.getMessage());

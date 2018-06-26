@@ -14,11 +14,10 @@ import javax.ejb.Stateful;
 @LocalBean
 public class SupplyOrderNotificationBean {
 
-    
-    private static final String KREMLIN_URL = "Kremlin URL";
-    
+    private String KREMLIN_URL;
+
     private String token;
-    
+
     @EJB
     private AuthenticationBean authenticationBean;
     @EJB
@@ -29,7 +28,6 @@ public class SupplyOrderNotificationBean {
         token = authenticationBean.getToken().toString();
     }
 
-
     private SupplyOrderNotification createNotification(SupplyOrder supplyOrder) {
         long orderNumber = supplyOrder.getOrderNumber();
         long servicePointId = supplyOrder.getServicePointId();
@@ -39,9 +37,9 @@ public class SupplyOrderNotificationBean {
 
     public void notifyCreation(SupplyOrder supplyOrder) {
         SupplyOrderNotification notification = createNotification(supplyOrder);
-        
+
         String method = "POST";
-        String url = KREMLIN_URL;
+        String url = getKremlinUrl();
         Type responseType = String.class;
         boolean responseIsList = false;
         Type contentType = SupplyOrderNotification.class;
@@ -53,11 +51,11 @@ public class SupplyOrderNotificationBean {
     public void notifyModification(SupplyOrder supplyOrder) {
         SupplyOrderNotification notification = createNotification(supplyOrder);
         String method = "PUT";
-        String url = KREMLIN_URL + "/" + supplyOrder.getOrderNumber();
+        String url = getKremlinUrl() + "/" + supplyOrder.getOrderNumber();
         Type responseType = String.class;
         boolean responseIsList = false;
         Type contentType = SupplyOrderNotification.class;
-  
+
         Request request = Request.buildRequestWithContent(url, method, responseType,
                 responseIsList, token, notification, contentType);
         String response = (String) requesterBean.sendRequest(request);
@@ -66,11 +64,18 @@ public class SupplyOrderNotificationBean {
     public void notifyRemoval(SupplyOrder supplyOrder) {
         SupplyOrderNotification notification = createNotification(supplyOrder);
         String method = "DELETE";
-        String url = KREMLIN_URL + "/" + supplyOrder.getOrderNumber();
+        String url = getKremlinUrl() + "/" + supplyOrder.getOrderNumber();
         Type responseType = String.class;
         boolean responseIsList = false;
-        
+
         Request request = Request.buildRequestWithoutContent(url, method, responseType, responseIsList, token);
         String response = (String) requesterBean.sendRequest(request);
+    }
+
+    private String getKremlinUrl() {
+        if (KREMLIN_URL == null) {
+            KREMLIN_URL = authenticationBean.getKremlinUrl();
+        }
+        return KREMLIN_URL;
     }
 }
