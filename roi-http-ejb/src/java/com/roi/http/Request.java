@@ -33,4 +33,9 @@ public class Request implements Serializable {
             boolean responseIsList, String token, Object content, Type contentType) {
         return new Request(url, method, responseType, responseIsList, token, content, contentType);
     }
+    
+    public static Request buildRequestWithPlainJson(String url, String method, Type responseType,
+            boolean responseIsList, String token, String json) {
+        return new Request(url, method, responseType, responseIsList, token, json, String.class);
+    }
 }

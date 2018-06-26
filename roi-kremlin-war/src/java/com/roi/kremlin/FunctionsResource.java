@@ -1,6 +1,7 @@
 package com.roi.kremlin;
 
 import com.roi.kremlin.models.AuthorizationBean;
+import com.roi.kremlin.models.SenderBean;
 import com.roi.kremlin.models.ValidatorBean;
 import java.util.List;
 import javax.ws.rs.Consumes;
@@ -19,6 +20,9 @@ public class FunctionsResource {
     
     @EJB
     private AuthorizationBean authorizationBean;
+    
+    @EJB
+    private SenderBean senderBean;
 
     @EJB
     private ValidatorBean validatorBean;

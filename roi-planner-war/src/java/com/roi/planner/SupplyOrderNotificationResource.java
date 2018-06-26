@@ -13,9 +13,11 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 
-@Path("supply-order")
 public class SupplyOrderNotificationResource {
 
+    @EJB
+    private PlanApproverBean planApproverBean;
+    
     @EJB
     private NotificationManagerBean notificationManagerBean;
 
@@ -29,6 +31,7 @@ public class SupplyOrderNotificationResource {
     }
 
     @POST
+    @Path("supply-order")
     @Consumes(MediaType.APPLICATION_JSON)
     public void createdSupplyOrder(String content) {
         SupplyOrderNotification notification = gson.fromJson(content,
@@ -37,7 +40,7 @@ public class SupplyOrderNotificationResource {
     }
 
     @PUT
-    @Path("{id}")
+    @Path("supply-order/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public void modifiedSupplyOrder(@PathParam("id") Long id, String body) {
         SupplyOrderNotification notification = gson.fromJson(body,
@@ -46,9 +49,15 @@ public class SupplyOrderNotificationResource {
     }
 
     @DELETE
-    @Path("{id}")
+    @Path("supply-order/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public void removedSupplyOrder(@PathParam("id") Long id) {
         notificationManagerBean.removed(id);
+    }
+    
+    @POST
+    @Path("supply-plan/{id}")
+    public void approveSupplyPlan(@PathParam("id") Long id){
+        planApproverBean.approve(id);
     }
 }

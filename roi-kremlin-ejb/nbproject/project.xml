@@ -8,6 +8,7 @@
             <included-library dirs="200">file.reference.gson-2.8.2.jar</included-library>
             <included-library dirs="200">file.reference.json-simple-1.1.jar</included-library>
             <included-library dirs="100">reference.roi-utilities.dist</included-library>
+            <included-library dirs="100">reference.roi-http-ejb.dist</included-library>
             <source-roots>
                 <root id="src.dir"/>
             </source-roots>
@@ -16,6 +17,14 @@
             </test-roots>
         </data>
         <references xmlns="http://www.netbeans.org/ns/ant-project-references/1">
+            <reference>
+                <foreign-project>roi-http-ejb</foreign-project>
+                <artifact-type>jar</artifact-type>
+                <script>build.xml</script>
+                <target>dist</target>
+                <clean-target>clean</clean-target>
+                <id>dist</id>
+            </reference>
             <reference>
                 <foreign-project>roi-utilities</foreign-project>
                 <artifact-type>jar</artifact-type>

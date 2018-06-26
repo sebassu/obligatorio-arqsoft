@@ -4,7 +4,7 @@
 "functionSpecifications":
 	{
 	"name":"createdSupplyOrder",
-	"location":"/supply-order/{id}",
+	"location":"POST%http://planner/web-resources/supply-order/{id}",
 	"type":"WEB_REST_API",
 	"parameters": 
 		[
@@ -16,14 +16,14 @@
 	},
 	{
 	"name":"modifiedSupplyOrder",
-	"location":"supply-order",
+	"location":"PUT%http://planner/web-resources/supply-order",
 	"type":"WEB_REST_API",
 	"parameters": [{"orderNumber":"long"}, {"servicePointId":"long"}],
 	"accessibleBy": ["supplyier"]
 	},
 	{
 	"name":"removedSupplyOrder",
-	"location":"supply-order",
+	"location":"DELETE%http://planner/web-resources/supply-order",
 	"type":"WEB_REST_API",
 	"parameters": [{"orderNumber":"long"}],
 	"accessibleBy": ["supplyier"]

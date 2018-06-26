@@ -68,4 +68,40 @@ public class RequesterBean implements RequesterBeanLocal {
         writer.write(content);
         writer.close();
     }
+    
+    public Object sendPureJson(Request request) {
+        BufferedReader reader = null;
+        try {
+            URL finalUrl = new URL(request.url);
+            HttpURLConnection connection = (HttpURLConnection) finalUrl.openConnection();
+            connection.setReadTimeout(5000);
+            connection.setConnectTimeout(10000);
+            connection.setRequestMethod(request.method);
+            connection.setDoInput(true);
+            if (request.content != null) {
+                writeOutput(connection, request.content.toString());
+            }
+            if (request.token != null) {
+                connection.addRequestProperty("Authentication", request.token);
+            }
+            connection.connect();
+
+            reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
+            String valor = reader.readLine();
+            return valor;
+        } catch (IOException ex) {
+            loggerBean.logFatalErrorFromMessageClass("Failed to read connection stream.",
+                    RequesterBean.class.toString(), ex);
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException ex) {
+
+                    return null;
+                }
+            }
+        }
+        return null;
+    }
 }

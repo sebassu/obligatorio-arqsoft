@@ -9,9 +9,11 @@ import javax.ejb.MessageDriven;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
+import javax.jms.TextMessage;
 
 @MessageDriven(activationConfig = {
-    @ActivationConfigProperty(propertyName = "destinationLookup", propertyValue = "jms/roiGoliathQueue"),
+    @ActivationConfigProperty(propertyName = "destinationLookup", propertyValue = "jms/roiGoliathQueue")
+    ,
     @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue")})
 public class PlanExecutionerBean implements MessageListener {
 
@@ -30,8 +32,8 @@ public class PlanExecutionerBean implements MessageListener {
     @Override
     public void onMessage(Message data) {
         try {
-            SupplyPlan toApprove = data.getBody(SupplyPlan.class);
-            executePlan(toApprove);
+            TextMessage stringData = (TextMessage) data;
+            executePlan(stringData.getText());
         } catch (JMSException exception) {
             String message = "Ocurrió un error desconocido: no fue posible"
                     + " interpretar el contenido de un mensaje.";
@@ -40,8 +42,8 @@ public class PlanExecutionerBean implements MessageListener {
         }
     }
 
-    private void executePlan(SupplyPlan toApprove) {
-        String planData = gson.toJson(toApprove);
+    private void executePlan(String planData) {
+        SupplyPlan plan = gson.fromJson(planData, SupplyPlan.class);
         String message = "Se ejecutó en Goliath el plan de datos: " + planData;
         String originClass = PlanExecutionerBean.class.getName();
         logger.logInformationMessageFromClass(message, originClass);
