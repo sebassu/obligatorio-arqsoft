@@ -7,7 +7,6 @@ import java.util.UUID;
 public class ProducerSpecification {
 
     private String name;
-    private UUID token;
 
     private List<FunctionSpecification> functionSpecifications;
 
@@ -25,14 +24,6 @@ public class ProducerSpecification {
 
     public void setFunctionSpecifications(List<FunctionSpecification> functionSpecifications) {
         this.functionSpecifications = functionSpecifications;
-    }
-    
-    public UUID getToken() {
-        return token;
-    }
-
-    public void setToken(UUID token) {
-        this.token = token;
     }
     
     public FunctionSpecification getFunSpecificationByName(String functionName) {

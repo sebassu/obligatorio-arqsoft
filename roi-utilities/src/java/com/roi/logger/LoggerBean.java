@@ -1,6 +1,6 @@
-package com.roi.models;
+package com.roi.logger;
 
-import com.roi.utilities.LoggingData;
+import com.roi.logger.LoggingData;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;

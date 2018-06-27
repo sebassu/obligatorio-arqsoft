@@ -1,6 +1,10 @@
-package com.roi.kremlin.models;
+package com.roi.kremlin.authorization;
 
-import com.roi.models.LoggerBean;
+import com.roi.kremlin.ConsumerSpecification;
+import com.roi.kremlin.FunctionSpecification;
+import com.roi.kremlin.services.ProducerSpecification;
+import com.roi.kremlin.services.ServicesBean;
+import com.roi.logger.LoggerBean;
 import java.util.List;
 import java.util.UUID;
 import javax.ejb.EJB;
@@ -45,13 +49,13 @@ public class AuthorizationBean {
     }
 
     private String findAppFromToken(UUID token) {
-        List<AppSpecification> appsSpecifications = servicesBean.getAppsSpecs();
+        List<ConsumerSpecification> consSpecifications = servicesBean.getConsumerSpecs();
         boolean found = false;
         String appName = null;
-        for (int i = 0; i < appsSpecifications.size() && !found; i++) {
-            AppSpecification spec = appsSpecifications.get(i);
+        for (int i = 0; i < consSpecifications.size() && !found; i++) {
+            ConsumerSpecification spec = consSpecifications.get(i);
             if (spec.getToken().equals(token)) {
-                appName = spec.getName();
+                appName = spec.geName();
                 found = true;
             }
         }

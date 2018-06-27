@@ -1,9 +1,9 @@
-package com.roi.kremlin.models;
+package com.roi.kremlin;
 
 public class ParameterSpecification {
-    private String name;
-    private String type;
-    private String format;
+    public String name;
+    public String type;
+    public String format;
 
     public String getName() {
         return name;
@@ -16,4 +16,5 @@ public class ParameterSpecification {
     public String getFormat() {
         return format;
     }
+    
 }

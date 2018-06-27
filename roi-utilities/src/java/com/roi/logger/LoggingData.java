@@ -1,14 +1,16 @@
-package com.roi.utilities;
+package com.roi.logger;
 
 import java.io.Serializable;
 
 public class LoggingData implements Serializable {
 
+    private static final long serialVersionUID = 42L;
+    
     public final String message;
     public final String originClass;
     public final LogType type;
     public final Throwable errorData;
-
+    
     private LoggingData(String messageToSet, String originClassToSet,
             LogType typeToSet) {
         message = messageToSet;

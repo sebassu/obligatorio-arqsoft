@@ -1,6 +1,8 @@
-package com.roi.kremlin.models;
+package com.roi.kremlin.validation;
 
-import com.roi.models.LoggerBean;
+import com.roi.kremlin.ParameterSpecification;
+import com.roi.kremlin.validation.ValidatorBean;
+import com.roi.logger.LoggerBean;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -45,7 +47,6 @@ public class FormatBean {
         boolean isDate = "Date".equalsIgnoreCase(paramSpec.getType());
         if (isDate) {
             try {
-                String format = paramSpec.getFormat();
                 DateFormat dateFormat = new SimpleDateFormat(paramSpec.getFormat());
                 return true;
             } catch (IllegalArgumentException ex) {

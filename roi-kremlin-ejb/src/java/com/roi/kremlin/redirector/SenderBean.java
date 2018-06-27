@@ -1,8 +1,13 @@
-package com.roi.kremlin.models;
+package com.roi.kremlin.redirector;
 
+import com.roi.kremlin.redirector.JmsSenderBean;
+import com.roi.kremlin.FunctionSpecification;
+import com.roi.kremlin.validation.ValidatorBean;
+import com.roi.kremlin.services.ServicesBean;
 import com.roi.http.Request;
 import com.roi.http.RequesterBean;
-import com.roi.models.LoggerBean;
+import com.roi.kremlin.CommunicationType;
+import com.roi.logger.LoggerBean;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.ejb.EJB;

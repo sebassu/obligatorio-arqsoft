@@ -1,6 +1,9 @@
-package com.roi.kremlin.models;
+package com.roi.kremlin.validation;
 
-import com.roi.models.LoggerBean;
+import com.roi.kremlin.ParameterSpecification;
+import com.roi.kremlin.FunctionSpecification;
+import com.roi.kremlin.services.ServicesBean;
+import com.roi.logger.LoggerBean;
 import java.util.Iterator;
 import java.util.List;
 import javax.ejb.EJB;

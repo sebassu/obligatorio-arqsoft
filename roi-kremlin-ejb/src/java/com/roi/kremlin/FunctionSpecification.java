@@ -1,5 +1,6 @@
-package com.roi.kremlin.models;
+package com.roi.kremlin;
 
+import com.roi.kremlin.CommunicationType;
 import java.util.List;
 
 public class FunctionSpecification {

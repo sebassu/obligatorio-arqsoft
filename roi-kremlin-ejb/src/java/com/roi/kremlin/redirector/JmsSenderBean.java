@@ -1,6 +1,6 @@
-package com.roi.kremlin.models;
+package com.roi.kremlin.redirector;
 
-import com.roi.models.LoggerBean;
+import com.roi.logger.LoggerBean;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
