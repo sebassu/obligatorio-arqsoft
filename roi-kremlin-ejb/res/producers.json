@@ -26,5 +26,12 @@
 	"type":"WEB_REST_API",
 	"parameters": [{"orderNumber":"long"}],
 	"accessibleBy": ["supplyier"]
+	},
+	{
+	"name":"approveSupplyPlan",
+	"location":"POST%http://planner/web-resources/supply-plan/{id}",
+	"type":"WEB_REST_API",
+	"parameters": [{"id":"long"}],
+	"accessibleBy": ["supplyier"]
 	}
 }

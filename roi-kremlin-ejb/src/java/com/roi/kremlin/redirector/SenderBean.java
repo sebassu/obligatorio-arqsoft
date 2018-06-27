@@ -8,9 +8,16 @@ import com.roi.http.Request;
 import com.roi.http.RequesterBean;
 import com.roi.kremlin.CommunicationType;
 import com.roi.logger.LoggerBean;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.ejb.EJB;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 @Stateless
 @LocalBean
@@ -50,8 +57,12 @@ public class SenderBean {
 
     private void sendRest(FunctionSpecification funSpec, String body) {
         String[] location = funSpec.getLocation().split("%");
+        
         String method = location[0];
+        
         String url = location[1];
+        url = checkAndAddPathParams(url, body);
+
         Request req = Request.buildRequestWithPlainJson(url, method, String.class, true, null, body);
         requesterBean.sendPureJson(req);
     }
@@ -59,5 +70,27 @@ public class SenderBean {
     private void sendJms(FunctionSpecification funSpec, String body) {
         String queueName = funSpec.getLocation();
         jmsSenderBean.attemptToSendMessageToQueue(queueName, body);
+    }
+
+    private String checkAndAddPathParams(String url, String body) {
+        String modifiedUrl = url;
+        try {
+            JSONObject jsonData = (JSONObject) (new JSONParser().parse(body));
+
+            Pattern pathParamPattern = Pattern.compile("\\{(.*?)\\}");
+            Matcher matcher = pathParamPattern.matcher(url);
+
+            while (matcher.find()) {
+                String paramName = matcher.group(1);
+                if (!jsonData.containsKey(paramName)) {
+                    throw new IllegalArgumentException("specified query param was not provided");
+                }
+                String value = jsonData.get(paramName).toString();
+                matcher.replaceFirst(value);
+            }
+        } catch (ParseException ex) {
+            loggerBean.logInputErrorFromClass("Couldnt parse provided JSON: " + ex, SenderBean.class.toString());
+        }
+        return modifiedUrl;
     }
 }

@@ -58,7 +58,7 @@ public class SupplyOrderNotificationResource {
     
     @POST
     @Path("supply-plan/{id}")
-    public void approveSupplyPlan(@PathParam("id") Long id){
+    public void approveSupplyPlan(@PathParam("id") Long id) {
         planApproverBean.approve(id);
     }
 }
