@@ -1,5 +1,6 @@
 package com.roi.planner;
 
+import com.roi.planner.approval.PlanApproverBean;
 import com.google.gson.Gson;
 import javax.ejb.EJB;
 import javax.ws.rs.core.Context;

@@ -11,6 +11,8 @@ import javax.persistence.Temporal;
 @Entity
 public class SupplyOrder implements Serializable {
 
+    private static final long serialVersionUID = 42L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long orderNumber;

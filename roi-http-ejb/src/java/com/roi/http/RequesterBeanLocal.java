@@ -5,5 +5,7 @@ import javax.ejb.Local;
 
 @Local
 public interface RequesterBeanLocal {
-    Object sendRequest(Request request);
+    public Object sendRequest(Request request);
+
+    public Object sendPureJson(Request request);
 }

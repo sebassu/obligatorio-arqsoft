@@ -1,7 +1,7 @@
 package com.roi.http;
 
 import com.google.gson.Gson;
-import com.roi.models.LoggerBean;
+import com.roi.logger.LoggerBean;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -16,7 +16,7 @@ import javax.ejb.EJB;
 @Stateless
 public class RequesterBean implements RequesterBeanLocal {
 
-    private static Gson gson;
+    private Gson gson;
 
     @EJB
     LoggerBean loggerBean;
@@ -26,6 +26,7 @@ public class RequesterBean implements RequesterBeanLocal {
         gson = new Gson();
     }
 
+    @Override
     public Object sendRequest(Request request) {
         BufferedReader reader = null;
         try {
@@ -46,7 +47,7 @@ public class RequesterBean implements RequesterBeanLocal {
 
             reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
             String valor = reader.readLine();
-            return valor;
+            return gson.fromJson(valor, request.responseType);
         } catch (IOException ex) {
             loggerBean.logFatalErrorFromMessageClass("Failed to read connection stream.",
                     RequesterBean.class.toString(), ex);
@@ -64,11 +65,12 @@ public class RequesterBean implements RequesterBeanLocal {
     }
 
     private static void writeOutput(HttpURLConnection connection, String content) throws IOException {
-        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream()));
-        writer.write(content);
-        writer.close();
+        try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), ("UTF-8")))) {
+            writer.write(content);
+        }
     }
-    
+
+    @Override
     public Object sendPureJson(Request request) {
         BufferedReader reader = null;
         try {
@@ -88,7 +90,7 @@ public class RequesterBean implements RequesterBeanLocal {
 
             reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
             String valor = reader.readLine();
-            return valor;
+            return gson.fromJson(valor, request.responseType);
         } catch (IOException ex) {
             loggerBean.logFatalErrorFromMessageClass("Failed to read connection stream.",
                     RequesterBean.class.toString(), ex);

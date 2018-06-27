@@ -1,8 +1,8 @@
 package com.roi.kremlin;
 
-import com.roi.kremlin.models.AuthorizationBean;
-import com.roi.kremlin.models.SenderBean;
-import com.roi.kremlin.models.ValidatorBean;
+import com.roi.kremlin.authorization.AuthorizationBean;
+import com.roi.kremlin.redirector.SenderBean;
+import com.roi.kremlin.validation.ValidatorBean;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;

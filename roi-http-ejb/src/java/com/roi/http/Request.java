@@ -1,9 +1,8 @@
 package com.roi.http;
 
-import java.io.Serializable;
 import java.lang.reflect.Type;
 
-public class Request implements Serializable {
+public class Request {
 
     public String url;
     public String method;

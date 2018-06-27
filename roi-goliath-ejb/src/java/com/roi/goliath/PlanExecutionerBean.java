@@ -1,8 +1,6 @@
 package com.roi.goliath;
 
-import com.google.gson.Gson;
-import com.roi.models.LoggerBean;
-import javax.annotation.PostConstruct;
+import com.roi.logger.LoggerBean;
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.EJB;
 import javax.ejb.MessageDriven;
@@ -12,21 +10,14 @@ import javax.jms.MessageListener;
 import javax.jms.TextMessage;
 
 @MessageDriven(activationConfig = {
-    @ActivationConfigProperty(propertyName = "destinationLookup", propertyValue = "jms/roiGoliathQueue")
-    ,
+    @ActivationConfigProperty(propertyName = "destinationLookup", propertyValue = "jms/roiGoliathQueue"),
     @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue")})
 public class PlanExecutionerBean implements MessageListener {
 
     @EJB
     private LoggerBean logger;
-    private Gson gson;
 
     public PlanExecutionerBean() {
-    }
-
-    @PostConstruct
-    public void init() {
-        gson = new Gson();
     }
 
     @Override
@@ -43,7 +34,6 @@ public class PlanExecutionerBean implements MessageListener {
     }
 
     private void executePlan(String planData) {
-        SupplyPlan plan = gson.fromJson(planData, SupplyPlan.class);
         String message = "Se ejecutó en Goliath el plan de datos: " + planData;
         String originClass = PlanExecutionerBean.class.getName();
         logger.logInformationMessageFromClass(message, originClass);

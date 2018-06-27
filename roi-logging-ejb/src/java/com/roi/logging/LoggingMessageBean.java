@@ -1,6 +1,6 @@
 package com.roi.logging;
 
-import com.roi.utilities.LoggingData;
+import com.roi.logger.LoggingData;
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.MessageDriven;
 import javax.jms.JMSException;

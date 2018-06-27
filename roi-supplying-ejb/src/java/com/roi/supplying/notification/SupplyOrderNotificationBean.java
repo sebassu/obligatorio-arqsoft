@@ -2,6 +2,7 @@ package com.roi.supplying.notification;
 
 import com.roi.http.Request;
 import com.roi.http.RequesterBean;
+import com.roi.logger.LoggerBean;
 import com.roi.security.AuthenticationBean;
 import com.roi.supplying.SupplyOrder;
 import java.lang.reflect.Type;
@@ -22,6 +23,8 @@ public class SupplyOrderNotificationBean {
     private AuthenticationBean authenticationBean;
     @EJB
     private RequesterBean requesterBean;
+    @EJB
+    private LoggerBean loggerBean;
 
     @PostConstruct
     private void init() {
@@ -45,7 +48,8 @@ public class SupplyOrderNotificationBean {
         Type contentType = SupplyOrderNotification.class;
         Request request = Request.buildRequestWithContent(url, method, responseType,
                 responseIsList, token, notification, contentType);
-        String responses = (String) requesterBean.sendRequest(request);
+        String response = (String) requesterBean.sendRequest(request);
+        loggerBean.logInformationMessageFromClass(response, SupplyOrderNotificationBean.class.toString());
     }
 
     public void notifyModification(SupplyOrder supplyOrder) {
@@ -59,6 +63,7 @@ public class SupplyOrderNotificationBean {
         Request request = Request.buildRequestWithContent(url, method, responseType,
                 responseIsList, token, notification, contentType);
         String response = (String) requesterBean.sendRequest(request);
+        loggerBean.logInformationMessageFromClass(response, SupplyOrderNotificationBean.class.toString());
     }
 
     public void notifyRemoval(SupplyOrder supplyOrder) {
@@ -70,6 +75,7 @@ public class SupplyOrderNotificationBean {
 
         Request request = Request.buildRequestWithoutContent(url, method, responseType, responseIsList, token);
         String response = (String) requesterBean.sendRequest(request);
+        loggerBean.logInformationMessageFromClass(response, SupplyOrderNotificationBean.class.toString());
     }
 
     private String getKremlinUrl() {

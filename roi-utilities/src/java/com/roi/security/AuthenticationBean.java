@@ -1,6 +1,6 @@
 package com.roi.security;
 
-import com.roi.models.LoggerBean;
+import com.roi.logger.LoggerBean;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.UUID;

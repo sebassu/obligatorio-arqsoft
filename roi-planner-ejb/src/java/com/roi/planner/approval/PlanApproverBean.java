@@ -1,7 +1,9 @@
-package com.roi.planner;
+package com.roi.planner.approval;
 
 import com.roi.http.Request;
 import com.roi.http.RequesterBean;
+import com.roi.planner.SupplyPlan;
+import com.roi.planner.SupplyPlanBean;
 import com.roi.security.AuthenticationBean;
 import java.lang.reflect.Type;
 import javax.annotation.PostConstruct;

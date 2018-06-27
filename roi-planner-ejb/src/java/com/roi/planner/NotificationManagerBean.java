@@ -5,7 +5,6 @@ import com.roi.http.RequesterBean;
 import com.roi.security.AuthenticationBean;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -19,16 +18,6 @@ public class NotificationManagerBean {
     private SupplyPlanBean supplyPlanBean;
     @EJB
     private RequesterBean requesterBean;
-    @EJB
-    private AuthenticationBean authenticationBean;
-
-    
-    private String token;
-
-    @PostConstruct
-    public void init() {
-        token = authenticationBean.getToken().toString();
-    }
     
     public void created(SupplyOrderNotification notification) {
         SupplyPlan plan = createPlan(notification);
@@ -59,7 +48,7 @@ public class NotificationManagerBean {
         String method = "POST";
         Type responseType = NetworkFrame.class;
         boolean responseIsList = true;
-        Request request = Request.buildRequestWithoutContent(url, method, responseType, responseIsList, token);
+        Request request = Request.buildRequestWithoutContent(url, method, responseType, responseIsList, null);
         
         ArrayList<NetworkFrame> networkFrames = (ArrayList<NetworkFrame>) requesterBean
                 .sendRequest(request);
