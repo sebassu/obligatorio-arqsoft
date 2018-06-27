@@ -1,9 +1,13 @@
-package com.roi.kremlin.models;
+package com.roi.kremlin.services;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.stream.JsonReader;
+import com.roi.kremlin.ConsumerSpecification;
+import com.roi.kremlin.validation.FormatBean;
+import com.roi.kremlin.FunctionSpecification;
+import com.roi.kremlin.ParameterSpecification;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Arrays;
@@ -17,10 +21,14 @@ import javax.ejb.EJB;
 @LocalBean
 public class ServicesBean {
 
+    private static final String CONSUMERS_FILE_PATH = "/res/consumers.txt";
+    private static final String PRODUCERS_FILE_PATH = "/res/producers.txt";
+
     @EJB
     private FormatBean formatBean;
 
-    private List<AppSpecification> appsSpecifications;
+    private List<ProducerSpecification> producersSpecifications;
+    private List<ConsumerSpecification> consumersSpecifications;
     private Gson gson;
 
     @PostConstruct
@@ -29,15 +37,22 @@ public class ServicesBean {
         loadRegisteredApplications();
     }
 
-    public List<AppSpecification> getAppsSpecs() {
-        if (appsSpecifications == null) {
+    public List<ConsumerSpecification> getConsumerSpecs() {
+        if (consumersSpecifications == null) {
             loadRegisteredApplications();
         }
-        return appsSpecifications;
+        return consumersSpecifications;
+    }
+    
+    public List<ProducerSpecification> getProducersSpecs() {
+        if (producersSpecifications == null) {
+            loadRegisteredApplications();
+        }
+        return producersSpecifications;
     }
 
     public FunctionSpecification getAppFunction(String appName, String function) throws NoSuchMethodException {
-        AppSpecification appSpec = getAppSpecificationByName(appName);
+        ProducerSpecification appSpec = getAppSpecificationByName(appName);
         if (appSpec == null) {
             throw new NoSuchMethodException("App is not specified.");
         }
@@ -48,11 +63,11 @@ public class ServicesBean {
         return funSpec;
     }
 
-    private AppSpecification getAppSpecificationByName(String appName) {
+    private ProducerSpecification getAppSpecificationByName(String appName) {
         boolean found = false;
-        AppSpecification appSpec = null;
-        for (int i = 0; i < appsSpecifications.size() && !found; i++) {
-            AppSpecification spec = appsSpecifications.get(i);
+        ProducerSpecification appSpec = null;
+        for (int i = 0; i < producersSpecifications.size() && !found; i++) {
+            ProducerSpecification spec = producersSpecifications.get(i);
             if (spec.getName().equals(appName)) {
                 appSpec = spec;
                 found = true;
@@ -62,12 +77,17 @@ public class ServicesBean {
     }
 
     private void loadRegisteredApplications() {
+        loadProducers();
+        loadConsumers();
+    }
+
+    private void loadProducers() {
         try {
-            JsonReader reader = new JsonReader(new FileReader("/res/config.txt"));
-            AppSpecification[] appSpecs = gson.fromJson(reader, AppSpecification[].class);
-            appsSpecifications = Arrays.asList(appSpecs);
+            JsonReader reader = new JsonReader(new FileReader(PRODUCERS_FILE_PATH));
+            ProducerSpecification[] appSpecs = gson.fromJson(reader, ProducerSpecification[].class);
+            producersSpecifications = Arrays.asList(appSpecs);
             if (!checkFormatsAreValid()) {
-                appsSpecifications = null;
+                producersSpecifications = null;
                 throw new IllegalStateException("Specification file with invalid format.");
             }
         } catch (FileNotFoundException | JsonIOException | JsonSyntaxException io) {
@@ -75,10 +95,20 @@ public class ServicesBean {
         }
     }
 
+    private void loadConsumers() {
+        try {
+            JsonReader reader = new JsonReader(new FileReader(CONSUMERS_FILE_PATH));
+            ConsumerSpecification[] conSpecs = gson.fromJson(reader, ConsumerSpecification[].class);
+            consumersSpecifications = Arrays.asList(conSpecs);
+        } catch (FileNotFoundException | JsonIOException | JsonSyntaxException io) {
+            throw new IllegalStateException("Specification file is invalid: " + io);
+        }
+    }
+
     private boolean checkFormatsAreValid() {
         boolean valid = true;
-        for (int i = 0; i < appsSpecifications.size() && valid; i++) {
-            AppSpecification appSpec = appsSpecifications.get(i);
+        for (int i = 0; i < producersSpecifications.size() && valid; i++) {
+            ProducerSpecification appSpec = producersSpecifications.get(i);
             for (int j = 0; j < appSpec.getFunctionSpecifications().size() && valid; j++) {
                 FunctionSpecification funSpec = appSpec.getFunctionSpecifications().get(j);
                 for (int k = 0; k < funSpec.getParameters().size() && valid; k++) {

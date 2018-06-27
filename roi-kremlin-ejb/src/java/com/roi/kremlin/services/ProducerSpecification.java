@@ -1,9 +1,10 @@
-package com.roi.kremlin.models;
+package com.roi.kremlin.services;
 
+import com.roi.kremlin.FunctionSpecification;
 import java.util.List;
 import java.util.UUID;
 
-public class AppSpecification {
+public class ProducerSpecification {
 
     private String name;
     private UUID token;
