@@ -4,7 +4,7 @@ import com.roi.http.Request;
 import com.roi.http.RequesterBean;
 import com.roi.logger.LoggerBean;
 import com.roi.security.AuthenticationBean;
-import com.roi.supplying.SupplyOrder;
+import com.roi.supplying.persistence.SupplyOrder;
 import java.lang.reflect.Type;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;

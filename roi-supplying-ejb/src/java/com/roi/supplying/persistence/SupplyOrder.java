@@ -1,4 +1,4 @@
-package com.roi.supplying;
+package com.roi.supplying.persistence;
 
 import java.io.Serializable;
 import java.util.Date;

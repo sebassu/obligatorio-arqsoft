@@ -1,4 +1,4 @@
-package com.roi.supplying;
+package com.roi.supplying.persistence;
 
 import java.util.List;
 import javax.ejb.LocalBean;

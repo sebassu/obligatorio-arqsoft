@@ -1,5 +1,7 @@
 package com.roi.supplying;
 
+import com.roi.supplying.persistence.SupplyOrderBean;
+import com.roi.supplying.persistence.SupplyOrder;
 import com.google.gson.Gson;
 import java.util.List;
 import javax.ejb.EJB;
