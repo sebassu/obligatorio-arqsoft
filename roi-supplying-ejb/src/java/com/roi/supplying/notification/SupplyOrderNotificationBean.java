@@ -13,7 +13,7 @@ import javax.ejb.Stateful;
 
 @Stateful
 @LocalBean
-public class SupplyOrderNotificationBean {
+public class SupplyOrderNotificationBean implements ISupplyOrderNotificationBean {
 
     private String KREMLIN_URL;
 
@@ -38,6 +38,7 @@ public class SupplyOrderNotificationBean {
         return new SupplyOrderNotification(orderNumber, servicePointId);
     }
 
+    @Override
     public void notifyCreation(SupplyOrder supplyOrder) {
         SupplyOrderNotification notification = createNotification(supplyOrder);
 
@@ -52,6 +53,7 @@ public class SupplyOrderNotificationBean {
         loggerBean.logInformationMessageFromClass(response, SupplyOrderNotificationBean.class.toString());
     }
 
+    @Override
     public void notifyModification(SupplyOrder supplyOrder) {
         SupplyOrderNotification notification = createNotification(supplyOrder);
         String method = "PUT";
@@ -66,10 +68,10 @@ public class SupplyOrderNotificationBean {
         loggerBean.logInformationMessageFromClass(response, SupplyOrderNotificationBean.class.toString());
     }
 
-    public void notifyRemoval(SupplyOrder supplyOrder) {
-        SupplyOrderNotification notification = createNotification(supplyOrder);
+    @Override
+    public void notifyRemoval(long orderNumber) {
         String method = "DELETE";
-        String url = getKremlinUrl() + "/" + supplyOrder.getOrderNumber();
+        String url = getKremlinUrl() + "/" + orderNumber;
         Type responseType = String.class;
         boolean responseIsList = false;
 

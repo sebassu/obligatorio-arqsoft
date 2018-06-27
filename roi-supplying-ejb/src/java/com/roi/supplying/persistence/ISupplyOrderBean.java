@@ -4,7 +4,7 @@ import java.util.List;
 import javax.ejb.Local;
 
 @Local
-public interface SupplyOrderBeanLocal {
+public interface ISupplyOrderBean {
 
     void create(SupplyOrder supplyOrder);
 
