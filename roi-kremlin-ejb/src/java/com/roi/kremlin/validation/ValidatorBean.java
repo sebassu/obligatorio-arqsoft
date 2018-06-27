@@ -1,11 +1,14 @@
 package com.roi.kremlin.validation;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.roi.kremlin.ParameterSpecification;
 import com.roi.kremlin.FunctionSpecification;
 import com.roi.kremlin.services.ServicesBean;
 import com.roi.logger.LoggerBean;
 import java.util.Iterator;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
@@ -17,6 +20,8 @@ import org.json.simple.parser.ParseException;
 @LocalBean
 public class ValidatorBean {
 
+    private Gson gson;
+
     @EJB
     FormatBean formatBean;
 
@@ -26,7 +31,12 @@ public class ValidatorBean {
     @EJB
     LoggerBean loggerBean;
 
-    public boolean isValidCall(String appName, String function, String content) {
+    @PostConstruct
+    public void init() {
+        gson = new Gson();
+    }
+
+    public boolean isValid(String appName, String function, String content) {
         FunctionSpecification funSpec;
         try {
             funSpec = servicesBean.getAppFunction(appName, function);
@@ -56,24 +66,21 @@ public class ValidatorBean {
     }
 
     private boolean meetsSpecification(JSONObject data, ParameterSpecification paramSpec) {
-        boolean hasParameter = false;
+        boolean hasParameter = true;
         try {
             if (data.containsKey(paramSpec.getName())) {
-                Object value = data.get(paramSpec.getName());
-                boolean valueHasCorrectType;
+                String value = (String) data.get(paramSpec.getName());
 
-                valueHasCorrectType = Class.forName(paramSpec.getType()).isInstance(value);
+                gson.fromJson(value, Class.forName(paramSpec.getType()));
 
-                boolean valueHasCorrectFormat = true;
                 if (paramSpec.getFormat() != null) {
-                    valueHasCorrectFormat = formatBean.validateFormat(value, paramSpec);
+                    hasParameter = formatBean.validateFormat(value, paramSpec);
                 }
-
-                hasParameter = valueHasCorrectType && valueHasCorrectFormat;
             }
-        } catch (ClassNotFoundException ex) {
+        } catch (ClassNotFoundException | JsonSyntaxException ex) {
             loggerBean.logFatalErrorFromMessageClass("Error when validating value type",
                     ValidatorBean.class.toString(), ex);
+            return false;
         }
         return hasParameter;
     }

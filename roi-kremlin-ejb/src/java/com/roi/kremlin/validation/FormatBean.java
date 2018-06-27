@@ -23,7 +23,7 @@ public class FormatBean {
         if (isDate) {
             try {
                 String format = paramSpec.getFormat();
-                DateFormat dateFormat = new SimpleDateFormat(paramSpec.getFormat());
+                DateFormat dateFormat = new SimpleDateFormat(format);
                 dateFormat.parse(value.toString());
                 return true;
             } catch (IllegalArgumentException ex) {
