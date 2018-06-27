@@ -2,6 +2,7 @@ package com.roi.kremlin;
 
 import com.roi.kremlin.authorization.AuthorizationBean;
 import com.roi.kremlin.redirector.SenderBean;
+import com.roi.kremlin.services.ServicesBean;
 import com.roi.kremlin.validation.ValidatorBean;
 import java.util.List;
 import javax.ws.rs.Consumes;
@@ -11,6 +12,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ejb.EJB;
 import javax.ws.rs.GET;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
@@ -26,12 +28,14 @@ public class FunctionsResource {
 
     @EJB
     private ValidatorBean validatorBean;
+    
+    @EJB
+    private ServicesBean servicesBean;
 
     @GET
-    public Response removeSupplyOrder() {
-        Response response;
-        response = Response.status(Response.Status.OK).build();
-        return response;
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getSpecification() {
+        return Response.ok(servicesBean.getProducersSpecs()).build();
     }
     
     @POST
@@ -48,15 +52,15 @@ public class FunctionsResource {
         String token = authHeaders.get(0);
         boolean isAuthorized = authorizationBean.isAuthorized(appName, function, token);
         if (!isAuthorized) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
+            return Response.status(Response.Status.UNAUTHORIZED).build();
         }
 
-        boolean isValidCall = validatorBean.isValidCall(appName, function, content);
+        boolean isValidCall = validatorBean.isValid(appName, function, content);
         if (!isValidCall) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
         
-        
+        senderBean.send(appName, function, content);
 
         return Response.ok().build();
     }

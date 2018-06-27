@@ -1,7 +1,8 @@
 package com.roi.planner;
 
-import com.roi.planner.approval.PlanApproverBean;
 import com.google.gson.Gson;
+import com.roi.planner.approval.IPlanApproverBean;
+import com.roi.planner.INotificationManagerBean;
 import javax.ejb.EJB;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -17,10 +18,10 @@ import javax.ws.rs.core.MediaType;
 public class SupplyOrderNotificationResource {
 
     @EJB
-    private PlanApproverBean planApproverBean;
+    private IPlanApproverBean planApproverBean;
     
     @EJB
-    private NotificationManagerBean notificationManagerBean;
+    private INotificationManagerBean notificationManagerBean;
 
     @Context
     private UriInfo context;

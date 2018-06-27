@@ -12,7 +12,7 @@ import javax.persistence.criteria.Root;
 
 @Stateless
 @LocalBean
-public class SupplyPlanBean implements SupplyPlanBeanLocal {
+public class SupplyPlanBean implements ISupplyPlanBean {
 
     @PersistenceContext(unitName = "PlannerPU")
     private EntityManager entityManager;

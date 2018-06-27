@@ -2,8 +2,8 @@ package com.roi.planner.approval;
 
 import com.roi.http.Request;
 import com.roi.http.RequesterBean;
+import com.roi.planner.ISupplyPlanBean;
 import com.roi.planner.SupplyPlan;
-import com.roi.planner.SupplyPlanBean;
 import com.roi.security.AuthenticationBean;
 import java.lang.reflect.Type;
 import javax.annotation.PostConstruct;
@@ -13,12 +13,12 @@ import javax.ejb.LocalBean;
 
 @Stateless
 @LocalBean
-public class PlanApproverBean {
+public class PlanApproverBean implements IPlanApproverBean {
 
     private String KREMLIN_URL;
 
     @EJB
-    SupplyPlanBean supplyPlanBean;
+    ISupplyPlanBean supplyPlanBean;
     @EJB
     RequesterBean requesterBean;
     @EJB
@@ -31,6 +31,7 @@ public class PlanApproverBean {
         token = authenticationBean.getToken().toString();
     }
 
+    @Override
     public void approve(long planId) {
         SupplyPlan plan = supplyPlanBean.get(planId);
         plan.setStatus(SupplyPlan.PlanStatus.APPROVED);

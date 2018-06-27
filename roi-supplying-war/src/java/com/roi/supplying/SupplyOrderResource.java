@@ -1,8 +1,9 @@
 package com.roi.supplying;
 
-import com.roi.supplying.persistence.SupplyOrderBean;
+import com.roi.supplying.persistence.ISupplyOrderBean;
 import com.roi.supplying.persistence.SupplyOrder;
 import com.google.gson.Gson;
+import com.roi.supplying.notification.ISupplyOrderNotificationBean;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ws.rs.core.Context;
@@ -22,7 +23,10 @@ import javax.ws.rs.core.Response;
 public class SupplyOrderResource {
 
     @EJB
-    private SupplyOrderBean supplyOrderBean;
+    private ISupplyOrderBean supplyOrderBean;
+    
+    @EJB
+    private ISupplyOrderNotificationBean supplyOrderNotificationBean;
 
     @Context
     private UriInfo context;
@@ -52,6 +56,7 @@ public class SupplyOrderResource {
                     .build();
         } else {
             supplyOrderBean.create(supplyOrder);
+            supplyOrderNotificationBean.notifyCreation(supplyOrder);
             response = Response.ok()
                     .entity(supplyOrder)
                     .type(MediaType.APPLICATION_JSON)
@@ -73,6 +78,7 @@ public class SupplyOrderResource {
         } else {
             
             supplyOrderBean.modify(id, supplyOrder);
+            supplyOrderNotificationBean.notifyModification(supplyOrder);
             response = Response.ok()
                     .entity(supplyOrder)
                     .type(MediaType.APPLICATION_JSON)
@@ -86,6 +92,7 @@ public class SupplyOrderResource {
     public Response removeSupplyOrder(@PathParam("id") Long id) {
         Response response;
         supplyOrderBean.remove(id);
+        supplyOrderNotificationBean.notifyRemoval(id);
         response = Response.status(Response.Status.OK).build();
         return response;
     }

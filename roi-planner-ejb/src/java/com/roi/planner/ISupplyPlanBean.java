@@ -3,7 +3,7 @@ package com.roi.planner;
 import javax.ejb.Local;
 
 @Local
-public interface SupplyPlanBeanLocal {
+public interface ISupplyPlanBean {
 
     void create(SupplyPlan supplyPlan);
 
