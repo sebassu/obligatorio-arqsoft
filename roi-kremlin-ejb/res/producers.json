@@ -1,0 +1,55 @@
+[
+	{
+	"name":"planner",
+	"functionSpecifications":
+		[{
+		"name":"createdSupplyOrder",
+		"location":"POST%http://planner/web-resources/supply-order/{id}",
+		"type":"WEB_REST_API",
+		"parameters": 
+			[
+				{"name":"id", "type":"Long"},
+				{"name":"orderNumber", "type":"Long"},
+				{"name":"servicePointId", "type":"Long"}
+			],
+		"accessibleBy": ["supplying"]
+		},
+		{
+		"name":"modifiedSupplyOrder",
+		"location":"PUT%http://planner/web-resources/supply-order",
+		"type":"WEB_REST_API",
+		"parameters": [{"name":"orderNumber", "type":"Long"}, {"name":"servicePointId", "type":"Long"}],
+		"accessibleBy": ["supplying"]
+		},
+		{
+		"name":"removedSupplyOrder",
+		"location":"DELETE%http://planner/web-resources/supply-order",
+		"type":"WEB_REST_API",
+		"parameters": [{"name":"orderNumber", "type":"Long"}],
+		"accessibleBy": ["supplying"]
+		},
+		{
+		"name":"approveSupplyPlan",
+		"location":"POST%http://planner/web-resources/supply-plan/{id}",
+		"type":"WEB_REST_API",
+		"parameters": [{"name":"id", "type":"Long"}],
+		"accessibleBy": ["supplying"]
+		}]
+	}
+	,
+	{
+	"name":"goliath",
+	"functionSpecifications":
+		[{
+		"name":"executePlan",
+		"location":"jms/roiGoliathQueue"
+		"type":"JAVA_MESSAGE_QUEUES"
+		"parameters": [
+						{"name":"id", "type":"Long"}, 
+						{"name":"orderNumber", "type":"Long"},
+						{"name":"servicePointId", "type":"Long"},
+						{"name":"networkFrames", "type":"NetworkFrame[]"}
+					],
+		"accessibleBy": ["planner"]
+		}]
+	}
